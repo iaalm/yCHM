@@ -1,0 +1,3 @@
+[submodule "CHMLib"]
+	path = CHMLib
+	url = https://github.com/iaalm/CHMLib.git

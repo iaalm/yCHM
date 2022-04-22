@@ -13,8 +13,7 @@ struct yCHMApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+            ContentView(page: CHMPage(html: "<b>b</b>c"))
         }
     }
 }
