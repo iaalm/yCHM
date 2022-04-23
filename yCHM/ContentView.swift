@@ -19,15 +19,14 @@ struct ContentView: View {
         {
             Button(action: {() in
                 let filename = docPicker.display()!
-                let update = CHMFile(filename: filename).first()
-                print("prepared")
-                DispatchQueue.main.async {
-                    print(update)
-                    print("update")
-                    self.page.html = update
-                }
+                let chm = CHMFile(filename: filename)
+                let unit = chm.list().first(where: {(unit) in
+                    unit.path.contains(".html")
+                })!
+                print(unit.path)
+            self.page.html = chm.get(unit: unit)
             }, label: {
-                /*@START_MENU_TOKEN@*/Text("Button")/*@END_MENU_TOKEN@*/
+                Text("Open")
             })
             WebView(text: $page.html)
                 .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)

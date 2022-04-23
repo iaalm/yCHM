@@ -27,6 +27,9 @@
 		F430ADBA2812D6FD00B71C40 /* CHMFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = F430ADB92812D6FD00B71C40 /* CHMFile.swift */; };
 		F430ADBB2812D6FD00B71C40 /* CHMFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = F430ADB92812D6FD00B71C40 /* CHMFile.swift */; };
 		F430ADBC2812D6FD00B71C40 /* CHMFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = F430ADB92812D6FD00B71C40 /* CHMFile.swift */; };
+		F430ADBE28138D1B00B71C40 /* EncodingHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = F430ADBD28138D1B00B71C40 /* EncodingHelpers.swift */; };
+		F430ADBF28138D1B00B71C40 /* EncodingHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = F430ADBD28138D1B00B71C40 /* EncodingHelpers.swift */; };
+		F430ADC028138D1B00B71C40 /* EncodingHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = F430ADBD28138D1B00B71C40 /* EncodingHelpers.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +74,7 @@
 		F430ADAD2812CE3D00B71C40 /* lzx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lzx.h; path = CHMLib/src/lzx.h; sourceTree = SOURCE_ROOT; };
 		F430ADB52812D4EC00B71C40 /* DocPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocPicker.swift; sourceTree = "<group>"; };
 		F430ADB92812D6FD00B71C40 /* CHMFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CHMFile.swift; sourceTree = "<group>"; };
+		F430ADBD28138D1B00B71C40 /* EncodingHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncodingHelpers.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,6 +142,7 @@
 				F430ADA62812CE2500B71C40 /* yCHMUITests-Bridging-Header.h */,
 				F430ADB52812D4EC00B71C40 /* DocPicker.swift */,
 				F430ADB92812D6FD00B71C40 /* CHMFile.swift */,
+				F430ADBD28138D1B00B71C40 /* EncodingHelpers.swift */,
 			);
 			path = yCHM;
 			sourceTree = "<group>";
@@ -303,6 +308,7 @@
 				F430ADBA2812D6FD00B71C40 /* CHMFile.swift in Sources */,
 				F430ADAE2812CE3D00B71C40 /* lzx.c in Sources */,
 				F430AD7D2812C3E500B71C40 /* Persistence.swift in Sources */,
+				F430ADBE28138D1B00B71C40 /* EncodingHelpers.swift in Sources */,
 				F430ADA92812CE2500B71C40 /* chm_lib.c in Sources */,
 				F430AD762812C3DE00B71C40 /* ContentView.swift in Sources */,
 				F430ADB62812D4EC00B71C40 /* DocPicker.swift in Sources */,
@@ -315,6 +321,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F430ADBF28138D1B00B71C40 /* EncodingHelpers.swift in Sources */,
 				F430ADAF2812CE3D00B71C40 /* lzx.c in Sources */,
 				F430ADAA2812CE2500B71C40 /* chm_lib.c in Sources */,
 				F430ADBB2812D6FD00B71C40 /* CHMFile.swift in Sources */,
@@ -327,6 +334,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F430ADC028138D1B00B71C40 /* EncodingHelpers.swift in Sources */,
 				F430ADB02812CE3D00B71C40 /* lzx.c in Sources */,
 				F430ADAB2812CE2500B71C40 /* chm_lib.c in Sources */,
 				F430ADBC2812D6FD00B71C40 /* CHMFile.swift in Sources */,
