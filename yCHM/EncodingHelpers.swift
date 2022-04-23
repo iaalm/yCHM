@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 func decodeString(ptr: UnsafeMutablePointer<UInt8>, len: Int) -> String {
     let encodingMapping = [
         "gb2312": String.Encoding(rawValue: CFStringConvertEncodingToNSStringEncoding(CFStringEncoding(CFStringEncodings.GB_18030_2000.rawValue)))
@@ -25,7 +24,7 @@ func decodeString(ptr: UnsafeMutablePointer<UInt8>, len: Int) -> String {
 
 func getEncoding(str: String) -> String {
     let validChar = "abcderghijklmnopqrstuvwxyz0123456789"
-    var startIdx = str.range(of: "charset=")!.upperBound
+    let startIdx = str.range(of: "charset=")!.upperBound
     let encodingStart = str.suffix(from: startIdx)
     let encoding = encodingStart.prefix(while: {validChar.lowercased().contains($0)})
     

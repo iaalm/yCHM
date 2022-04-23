@@ -12,17 +12,17 @@ struct DocPicker {
     let dialog: NSOpenPanel
     init() {
         dialog = NSOpenPanel();
-        dialog.title                   = "Choose an image | Our Code World";
+        dialog.title                   = "Choose an CHM file";
         dialog.showsResizeIndicator    = true;
         dialog.showsHiddenFiles        = false;
         dialog.allowsMultipleSelection = false;
-        dialog.canChooseDirectories = false;
+        dialog.canChooseDirectories    = false;
         dialog.allowedFileTypes        = ["chm"];
     }
     
     func display() -> String? {
         if (dialog.runModal() ==  NSApplication.ModalResponse.OK) {
-            let result = dialog.url // Pathname of the file
+            let result = dialog.url
 
             if (result != nil) {
                 return result!.path
