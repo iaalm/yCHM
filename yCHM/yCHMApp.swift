@@ -13,7 +13,9 @@ struct yCHMApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView(page: CHMPage(html: "<b>b</b>c"))
+            ContentView(
+                page: CHMPage(html: ""),
+                units: [])
         }
     }
 }

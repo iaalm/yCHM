@@ -11,32 +11,45 @@ import CoreData
 
 struct ContentView: View {
     @State var page: CHMPage
+    @State var units: [CHMUnit]
+    @State var chm: CHMFile? = nil
     
     let docPicker = DocPicker()
     
     var body: some View {
-        VStack
-        {
+        VStack {
             Button(action: {() in
                 let filename = docPicker.display()!
-                let chm = CHMFile(filename: filename)
-                let unit = chm.list().first(where: {(unit) in
+                chm = CHMFile(filename: filename)
+                units = chm!.list()
+                let unit = units.first(where: {(unit) in
                     unit.path.contains(".html")
                 })!
-                print(unit.path)
-            self.page.html = chm.get(unit: unit)
+                unitSelected(unit: unit)
             }, label: {
                 Text("Open")
             })
-            WebView(text: $page.html)
-                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+            HStack {
+                FlatView(items: $units, onClick: self.unitSelected)
+                WebView(text: $page.html)
+                    .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+            }
+            
         }
+    }
+    
+    func unitSelected(unit: CHMUnit) {
+        print(unit.path)
+        self.page.html = chm!.get(unit: unit)
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(page: CHMPage(html: "a<b>b</b>"))
+        ContentView(
+            page: CHMPage(html: "<h1>HTML</h1> content"),
+            units: [CHMUnit()]
+        )
     }
 }
     

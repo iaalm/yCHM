@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct CHMUnit {
+class CHMUnit: Identifiable {
     let path: String
     let flags: Int32
     let space: Int32
