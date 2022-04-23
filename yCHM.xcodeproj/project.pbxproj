@@ -125,14 +125,13 @@
 		F430AD722812C3DE00B71C40 /* yCHM */ = {
 			isa = PBXGroup;
 			children = (
-				F430ADAC2812CE3C00B71C40 /* lzx.c */,
-				F430ADAD2812CE3D00B71C40 /* lzx.h */,
-				F430ADA72812CE2500B71C40 /* chm_lib.c */,
-				F430ADA82812CE2500B71C40 /* chm_lib.h */,
-				F430AD732812C3DE00B71C40 /* yCHMApp.swift */,
 				F430AD752812C3DE00B71C40 /* ContentView.swift */,
-				F430AD772812C3E500B71C40 /* Assets.xcassets */,
+				F430ADB92812D6FD00B71C40 /* CHMFile.swift */,
+				F430ADBD28138D1B00B71C40 /* EncodingHelpers.swift */,
+				F430ADB52812D4EC00B71C40 /* DocPicker.swift */,
+				F430AD732812C3DE00B71C40 /* yCHMApp.swift */,
 				F430AD7C2812C3E500B71C40 /* Persistence.swift */,
+				F430AD772812C3E500B71C40 /* Assets.xcassets */,
 				F430AD812812C3E500B71C40 /* Info.plist */,
 				F430AD822812C3E500B71C40 /* yCHM.entitlements */,
 				F430AD7E2812C3E500B71C40 /* yCHM.xcdatamodeld */,
@@ -140,9 +139,10 @@
 				F430ADA42812CE2500B71C40 /* yCHM-Bridging-Header.h */,
 				F430ADA52812CE2500B71C40 /* yCHMTests-Bridging-Header.h */,
 				F430ADA62812CE2500B71C40 /* yCHMUITests-Bridging-Header.h */,
-				F430ADB52812D4EC00B71C40 /* DocPicker.swift */,
-				F430ADB92812D6FD00B71C40 /* CHMFile.swift */,
-				F430ADBD28138D1B00B71C40 /* EncodingHelpers.swift */,
+				F430ADAD2812CE3D00B71C40 /* lzx.h */,
+				F430ADAC2812CE3C00B71C40 /* lzx.c */,
+				F430ADA82812CE2500B71C40 /* chm_lib.h */,
+				F430ADA72812CE2500B71C40 /* chm_lib.c */,
 			);
 			path = yCHM;
 			sourceTree = "<group>";
