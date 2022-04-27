@@ -117,7 +117,7 @@ class CHMFile {
         let ui = unit.allocCType()
         let buf = UnsafeMutablePointer<UInt8>.allocate(capacity: Int(unit.length))
         chm_retrieve_object(fd, ui, buf, 0, LONGINT64(unit.length))
-        
+        // TODO: maybe remove this function along with Encoding helpers
         let res = decodeString(ptr: buf, len: Int(unit.length))
         buf.deallocate()
         

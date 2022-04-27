@@ -11,7 +11,7 @@ import CoreData
 
 struct ContentView: View {
     @State var location: CHMLocation
-    // TODO: replace to [String]
+    // TODO: replace to CHM unit to a better object with key and tree support
     @State var units: [CHMUnit]
     @State var chm: CHMFile? = nil
     
@@ -53,5 +53,5 @@ struct ContentView_Previews: PreviewProvider {
     
 struct CHMLocation {
     var path: String
-    var urlCallback: (String) -> Data = { _ in print("invalid urlCallback"); return Data()}
+    var urlCallback: (String) -> Data = { _ in print("Empty URL callback"); return Data()}
 }
