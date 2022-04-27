@@ -10,11 +10,11 @@ import SwiftUI
 
 struct FlatView: View {
     @Binding var items: [CHMUnit]
-    let onClick: (CHMUnit) -> Void
+    let onClick: (String) -> Void
     
     var body: some View {
         List(items, id: \.id) { unit in
-            Button(action: {onClick(unit)}) {
+            Button(action: {onClick(unit.path)}) {
                 Text(unit.path)
             }
         }
@@ -22,5 +22,5 @@ struct FlatView: View {
 }
 
 protocol FlatViewController {
-    func click(unit: CHMUnit)
+    func click(path: String)
 }

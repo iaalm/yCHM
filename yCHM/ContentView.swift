@@ -10,7 +10,8 @@ import WebKit
 import CoreData
 
 struct ContentView: View {
-    @State var page: CHMPage
+    @State var location: CHMLocation
+    // TODO: replace to [String]
     @State var units: [CHMUnit]
     @State var chm: CHMFile? = nil
     
@@ -22,50 +23,35 @@ struct ContentView: View {
                 let filename = docPicker.display()!
                 chm = CHMFile(filename: filename)
                 units = chm!.list()
-                let unit = units.first(where: {(unit) in
-                    unit.path.contains(".html")
-                })!
-                unitSelected(unit: unit)
+                unitSelected(path: chm!.entryPoint())
             }, label: {
                 Text("Open")
             })
             HStack {
                 FlatView(items: $units, onClick: self.unitSelected)
-                WebView(text: $page.html)
+                WebView(location: $location)
                     .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
             }
             
         }
     }
     
-    func unitSelected(unit: CHMUnit) {
-        print(unit.path)
-        self.page.html = chm!.get(unit: unit)
+    func unitSelected(path: String) {
+        print(path)
+        self.location = CHMLocation(path: path, urlCallback: chm!.urlCallback)
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView(
-            page: CHMPage(html: "<h1>HTML</h1> content"),
+            location: CHMLocation(path: "/index.html"),
             units: [CHMUnit()]
         )
     }
 }
     
-
-struct WebView: NSViewRepresentable {
-  @Binding var text: String
-   
-  func makeNSView(context: Context) -> WKWebView {
-    return WKWebView()
-  }
-   
-  func updateNSView(_ uiView: WKWebView, context: Context) {
-    uiView.loadHTMLString(text, baseURL: nil)
-  }
-}
-
-struct CHMPage {
-    var html: String
+struct CHMLocation {
+    var path: String
+    var urlCallback: (String) -> Data = { _ in print("invalid urlCallback"); return Data()}
 }

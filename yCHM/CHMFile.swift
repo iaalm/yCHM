@@ -123,6 +123,29 @@ class CHMFile {
         
         return res
     }
+    
+    func entryPoint () -> String {
+        let units = self.list()
+        let unit = units.first(where: {(unit) in
+            unit.path.contains(".html")
+        })!
+        return unit.path
+    }
+    
+    func urlCallback(path: String) -> Data {
+        print("Getting \(path)")
+        let unit = UnsafeMutablePointer<chmUnitInfo>.allocate(capacity: 1)
+        let pathPtr = UnsafePointer<CChar>((path as NSString).utf8String)
+        chm_resolve_object(fd, pathPtr, unit)
+        let buf = UnsafeMutablePointer<UInt8>.allocate(capacity: Int(unit.pointee.length))
+        chm_retrieve_object(fd, unit, buf, 0, LONGINT64(unit.pointee.length))
+        
+        // use no copy here
+        let res = Data(bytes: buf, count: Int(unit.pointee.length))
+        buf.deallocate()
+        unit.deallocate()
+        return res
+    }
 }
 
 

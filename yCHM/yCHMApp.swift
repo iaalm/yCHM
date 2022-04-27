@@ -14,7 +14,7 @@ struct yCHMApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView(
-                page: CHMPage(html: ""),
+                location: CHMLocation(path: "/"),
                 units: [])
         }
     }
