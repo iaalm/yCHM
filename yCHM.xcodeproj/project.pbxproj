@@ -34,6 +34,7 @@
 		F430ADC5281424F800B71C40 /* UnitViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = F430ADC3281424F800B71C40 /* UnitViews.swift */; };
 		F430ADC6281424F800B71C40 /* UnitViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = F430ADC3281424F800B71C40 /* UnitViews.swift */; };
 		F486074428196EBF00B81C3A /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F486074328196EBF00B81C3A /* WebView.swift */; };
+		F4860746281AD5E200B81C3A /* CHMUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4860745281AD5E200B81C3A /* CHMUnit.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +82,7 @@
 		F430ADBD28138D1B00B71C40 /* EncodingHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncodingHelpers.swift; sourceTree = "<group>"; };
 		F430ADC3281424F800B71C40 /* UnitViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitViews.swift; sourceTree = "<group>"; };
 		F486074328196EBF00B81C3A /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
+		F4860745281AD5E200B81C3A /* CHMUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CHMUnit.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,6 +135,7 @@
 			children = (
 				F430AD752812C3DE00B71C40 /* ContentView.swift */,
 				F430ADB92812D6FD00B71C40 /* CHMFile.swift */,
+				F4860745281AD5E200B81C3A /* CHMUnit.swift */,
 				F430ADBD28138D1B00B71C40 /* EncodingHelpers.swift */,
 				F430ADB52812D4EC00B71C40 /* DocPicker.swift */,
 				F430AD732812C3DE00B71C40 /* yCHMApp.swift */,
@@ -321,6 +324,7 @@
 				F430AD762812C3DE00B71C40 /* ContentView.swift in Sources */,
 				F430ADB62812D4EC00B71C40 /* DocPicker.swift in Sources */,
 				F430AD802812C3E500B71C40 /* yCHM.xcdatamodeld in Sources */,
+				F4860746281AD5E200B81C3A /* CHMUnit.swift in Sources */,
 				F430AD742812C3DE00B71C40 /* yCHMApp.swift in Sources */,
 				F430ADC4281424F800B71C40 /* UnitViews.swift in Sources */,
 				F486074428196EBF00B81C3A /* WebView.swift in Sources */,
