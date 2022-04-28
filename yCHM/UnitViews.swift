@@ -37,7 +37,7 @@ struct UnitView: View {
     var body: some View {
         Button(action: { if unit.length != 0 { onClick(unit.path)}}) {
             Text(unit.name)
-        }
+        }.buttonStyle(PlainButtonStyle())
     }
 
 }
