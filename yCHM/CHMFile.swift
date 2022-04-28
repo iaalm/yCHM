@@ -8,6 +8,8 @@
 import Foundation
 
 class CHMUnit: Identifiable {
+    var parent: CHMUnit? = nil
+    var children: [CHMUnit]? = nil
     let path: String
     let flags: Int32
     let space: Int32
@@ -15,11 +17,21 @@ class CHMUnit: Identifiable {
     let length: UInt64
     
     init() {
-        path = ""
-        flags = 0
-        space = 0
-        start  = 0
-        length = 0
+        self.path = ""
+        self.flags = 0
+        self.space = 0
+        self.start  = 0
+        self.length = 0
+    }
+    
+    init(path:String, children: [CHMUnit]? = nil) {
+        self.flags = 0
+        self.space = 0
+        self.start  = 0
+        self.length = 0
+        self.path = path
+        self.children = children
+        children?.forEach({$0.parent = self})
     }
     
     init(c: UnsafeMutablePointer<chmUnitInfo>?) {
@@ -32,6 +44,18 @@ class CHMUnit: Identifiable {
         space = c!.pointee.space
         start = c!.pointee.start
         length = c!.pointee.length
+    }
+    
+    var name: String {
+        get {
+            let seg = path.split(separator: "/")
+            for i in seg.reversed() {
+                if i.count > 0 {
+                    return String(i)
+                }
+            }
+            return "root"
+        }
     }
     
     func allocCType() -> UnsafeMutablePointer<chmUnitInfo>{
@@ -65,9 +89,49 @@ class CHMUnit: Identifiable {
 
 class CHMFile {
     let fd: OpaquePointer
+    var path_mapping: Dictionary<String, CHMUnit>
+    let pages: [CHMUnit]
     
     init(filename: String) {
         fd = chm_open(filename)
+        path_mapping = Dictionary<String, CHMUnit>()
+        var len: Int = 0
+        let filter = CHM_ENUMERATE_NORMAL + CHM_ENUMERATE_FILES + CHM_ENUMERATE_DIRS
+        chm_enumerate(fd, filter, {(file, item, p) in
+            let pres = p!.assumingMemoryBound(to: Int.self)
+            pres.pointee += 1
+            return CHM_ENUMERATOR_CONTINUE
+        }, &len)
+        var res = ([CHMUnit](repeating: CHMUnit(), count: len), 0)
+        chm_enumerate(fd, filter, {(file, item, p) in
+            let pres = p!.assumingMemoryBound(to: ([CHMUnit], Int).self)
+            let unit = CHMUnit(c: item)
+            print("unit: \(unit.path), \(unit.flagList()), \(unit.length)")
+            pres.pointee.0[pres.pointee.1] = unit
+            pres.pointee.1 += 1
+            
+            return CHM_ENUMERATOR_CONTINUE
+        }, &res)
+        
+        let items = res.0
+        for i in items {
+            path_mapping[i.path] = i
+        }
+        
+        for i in items {
+            let path = i.path.prefix(i.path.count - 1)
+            let idx = path.lastIndex(of: "/")
+            if idx == nil {
+                continue
+            }
+            let ppath = String(i.path.prefix(through: idx!))
+            path_mapping[ppath] = path_mapping[ppath] ?? CHMUnit()
+            path_mapping[ppath]!.children = path_mapping[ppath]!.children ?? []
+            path_mapping[ppath]!.children!.append(i)
+            i.parent = path_mapping[ppath]
+        }
+        
+        pages = items
     }
     
     deinit {
@@ -75,24 +139,11 @@ class CHMFile {
     }
     
     func list() -> [CHMUnit] {
-        var len: Int = 0
-        chm_enumerate(fd, CHM_ENUMERATE_ALL, {(file, item, p) in
-            let pres = p!.assumingMemoryBound(to: Int.self)
-            pres.pointee += 1
-            return CHM_ENUMERATOR_CONTINUE
-        }, &len)
-        var res = ([CHMUnit](repeating: CHMUnit(), count: len), 0)
-        chm_enumerate(fd, CHM_ENUMERATE_ALL, {(file, item, p) in
-            let pres = p!.assumingMemoryBound(to: ([CHMUnit], Int).self)
-            let unit = CHMUnit(c: item)
-            pres.pointee.0[pres.pointee.1] = unit
-            pres.pointee.1 += 1
-            
-            return CHM_ENUMERATOR_CONTINUE
-        }, &res)
-        
-        return res.0
-        
+        return pages
+    }
+    
+    func getPageTree() -> CHMUnit {
+        return pages[0]
     }
 //
 //    func first() -> String {
@@ -135,8 +186,14 @@ class CHMFile {
     func urlCallback(path: String) -> Data {
         print("Getting \(path)")
         let unit = UnsafeMutablePointer<chmUnitInfo>.allocate(capacity: 1)
+        unit.pointee.start = 0
+        unit.pointee.length = 0
         let pathPtr = UnsafePointer<CChar>((path as NSString).utf8String)
         chm_resolve_object(fd, pathPtr, unit)
+        if unit.pointee.length == 0 {
+            // no content
+            return Data()
+        }
         let buf = UnsafeMutablePointer<UInt8>.allocate(capacity: Int(unit.pointee.length))
         chm_retrieve_object(fd, unit, buf, 0, LONGINT64(unit.pointee.length))
         

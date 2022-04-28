@@ -30,9 +30,9 @@
 		F430ADBE28138D1B00B71C40 /* EncodingHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = F430ADBD28138D1B00B71C40 /* EncodingHelpers.swift */; };
 		F430ADBF28138D1B00B71C40 /* EncodingHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = F430ADBD28138D1B00B71C40 /* EncodingHelpers.swift */; };
 		F430ADC028138D1B00B71C40 /* EncodingHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = F430ADBD28138D1B00B71C40 /* EncodingHelpers.swift */; };
-		F430ADC4281424F800B71C40 /* FlatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F430ADC3281424F800B71C40 /* FlatView.swift */; };
-		F430ADC5281424F800B71C40 /* FlatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F430ADC3281424F800B71C40 /* FlatView.swift */; };
-		F430ADC6281424F800B71C40 /* FlatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F430ADC3281424F800B71C40 /* FlatView.swift */; };
+		F430ADC4281424F800B71C40 /* UnitViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = F430ADC3281424F800B71C40 /* UnitViews.swift */; };
+		F430ADC5281424F800B71C40 /* UnitViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = F430ADC3281424F800B71C40 /* UnitViews.swift */; };
+		F430ADC6281424F800B71C40 /* UnitViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = F430ADC3281424F800B71C40 /* UnitViews.swift */; };
 		F486074428196EBF00B81C3A /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F486074328196EBF00B81C3A /* WebView.swift */; };
 /* End PBXBuildFile section */
 
@@ -79,7 +79,7 @@
 		F430ADB52812D4EC00B71C40 /* DocPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocPicker.swift; sourceTree = "<group>"; };
 		F430ADB92812D6FD00B71C40 /* CHMFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CHMFile.swift; sourceTree = "<group>"; };
 		F430ADBD28138D1B00B71C40 /* EncodingHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncodingHelpers.swift; sourceTree = "<group>"; };
-		F430ADC3281424F800B71C40 /* FlatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlatView.swift; sourceTree = "<group>"; };
+		F430ADC3281424F800B71C40 /* UnitViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitViews.swift; sourceTree = "<group>"; };
 		F486074328196EBF00B81C3A /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -137,7 +137,7 @@
 				F430ADB52812D4EC00B71C40 /* DocPicker.swift */,
 				F430AD732812C3DE00B71C40 /* yCHMApp.swift */,
 				F430AD7C2812C3E500B71C40 /* Persistence.swift */,
-				F430ADC3281424F800B71C40 /* FlatView.swift */,
+				F430ADC3281424F800B71C40 /* UnitViews.swift */,
 				F486074328196EBF00B81C3A /* WebView.swift */,
 				F430AD772812C3E500B71C40 /* Assets.xcassets */,
 				F430AD812812C3E500B71C40 /* Info.plist */,
@@ -322,7 +322,7 @@
 				F430ADB62812D4EC00B71C40 /* DocPicker.swift in Sources */,
 				F430AD802812C3E500B71C40 /* yCHM.xcdatamodeld in Sources */,
 				F430AD742812C3DE00B71C40 /* yCHMApp.swift in Sources */,
-				F430ADC4281424F800B71C40 /* FlatView.swift in Sources */,
+				F430ADC4281424F800B71C40 /* UnitViews.swift in Sources */,
 				F486074428196EBF00B81C3A /* WebView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -337,7 +337,7 @@
 				F430ADBB2812D6FD00B71C40 /* CHMFile.swift in Sources */,
 				F430ADB72812D4EC00B71C40 /* DocPicker.swift in Sources */,
 				F430AD8C2812C3E600B71C40 /* yCHMTests.swift in Sources */,
-				F430ADC5281424F800B71C40 /* FlatView.swift in Sources */,
+				F430ADC5281424F800B71C40 /* UnitViews.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -351,7 +351,7 @@
 				F430ADBC2812D6FD00B71C40 /* CHMFile.swift in Sources */,
 				F430ADB82812D4EC00B71C40 /* DocPicker.swift in Sources */,
 				F430AD972812C3E600B71C40 /* yCHMUITests.swift in Sources */,
-				F430ADC6281424F800B71C40 /* FlatView.swift in Sources */,
+				F430ADC6281424F800B71C40 /* UnitViews.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

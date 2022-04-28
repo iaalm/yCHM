@@ -29,6 +29,7 @@ struct ContentView: View {
             })
             HStack {
                 FlatView(items: $units, onClick: self.unitSelected)
+                TreeView(items: $units, onClick: self.unitSelected)
                 WebView(location: $location)
                     .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
             }
@@ -46,7 +47,13 @@ struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView(
             location: CHMLocation(path: "/index.html"),
-            units: [CHMUnit()]
+            units: [CHMUnit(path: "/", children: [
+                .init(path: "/a/", children: [
+                    .init(path: "/a/b"),
+                    .init(path: "/a/c")
+                ]),
+                .init(path: "/d")
+            ])]
         )
     }
 }
