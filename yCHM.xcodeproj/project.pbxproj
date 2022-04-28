@@ -15,10 +15,10 @@
 		F430AD802812C3E500B71C40 /* yCHM.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F430AD7E2812C3E500B71C40 /* yCHM.xcdatamodeld */; };
 		F430AD8C2812C3E600B71C40 /* yCHMTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F430AD8B2812C3E600B71C40 /* yCHMTests.swift */; };
 		F430AD972812C3E600B71C40 /* yCHMUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F430AD962812C3E600B71C40 /* yCHMUITests.swift */; };
-		F430ADA92812CE2500B71C40 /* chm_lib.c in Sources */ = {isa = PBXBuildFile; fileRef = F430ADA72812CE2500B71C40 /* chm_lib.c */; };
+		F430ADA92812CE2500B71C40 /* chm_lib.c in Sources */ = {isa = PBXBuildFile; fileRef = F430ADA72812CE2500B71C40 /* chm_lib.c */; settings = {COMPILER_FLAGS = "-w"; }; };
 		F430ADAA2812CE2500B71C40 /* chm_lib.c in Sources */ = {isa = PBXBuildFile; fileRef = F430ADA72812CE2500B71C40 /* chm_lib.c */; };
 		F430ADAB2812CE2500B71C40 /* chm_lib.c in Sources */ = {isa = PBXBuildFile; fileRef = F430ADA72812CE2500B71C40 /* chm_lib.c */; };
-		F430ADAE2812CE3D00B71C40 /* lzx.c in Sources */ = {isa = PBXBuildFile; fileRef = F430ADAC2812CE3C00B71C40 /* lzx.c */; };
+		F430ADAE2812CE3D00B71C40 /* lzx.c in Sources */ = {isa = PBXBuildFile; fileRef = F430ADAC2812CE3C00B71C40 /* lzx.c */; settings = {COMPILER_FLAGS = "-w"; }; };
 		F430ADAF2812CE3D00B71C40 /* lzx.c in Sources */ = {isa = PBXBuildFile; fileRef = F430ADAC2812CE3C00B71C40 /* lzx.c */; };
 		F430ADB02812CE3D00B71C40 /* lzx.c in Sources */ = {isa = PBXBuildFile; fileRef = F430ADAC2812CE3C00B71C40 /* lzx.c */; };
 		F430ADB62812D4EC00B71C40 /* DocPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F430ADB52812D4EC00B71C40 /* DocPicker.swift */; };
