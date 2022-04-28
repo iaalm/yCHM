@@ -14,9 +14,7 @@ struct FlatView: View {
     
     var body: some View {
         List(items, id: \.id) { unit in
-            Button(action: {onClick(unit.path)}) {
-                Text(unit.path)
-            }
+            UnitView(unit: unit, onClick: onClick)
         }
     }
 }
@@ -27,9 +25,19 @@ struct TreeView: View {
     
     var body: some View {
         List(items.filter({ $0.parent == nil }), id: \.id, children: \.children) { unit in
-            Button(action: {onClick(unit.path)}) {
-                Text(unit.name)
-            }
+            UnitView(unit: unit, onClick: onClick)
         }
     }
+}
+
+struct UnitView: View {
+    var unit: CHMUnit
+    let onClick: (String) -> Void
+    
+    var body: some View {
+        Button(action: { if unit.length != 0 { onClick(unit.path)}}) {
+            Text(unit.name)
+        }
+    }
+
 }
