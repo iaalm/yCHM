@@ -32,22 +32,18 @@ class WebViewURLSchemeHandler: NSObject, WKURLSchemeHandler {
     }
     
     func webView(_ webView: WKWebView, start urlSchemeTask: WKURLSchemeTask) {
-        print("Function: \(#function), line: \(#line)")
-        print("==> \(urlSchemeTask.request.url?.absoluteString ?? "")\n")
-
-        // Your local resource files will be catch here. You can determine it by checking the urlSchemeTask.request.url.
-        // From here I will unzip local resource files (js, css, png,...) if they are still in zip format
         let path = urlSchemeTask.request.url!.path
-        print("path \(path)")
+        print("retrieval \(path)")
         let data = self.location.urlCallback(path)
-
-        urlSchemeTask.didReceive(URLResponse(url: urlSchemeTask.request.url!, mimeType: "text/html", expectedContentLength: data.count, textEncodingName: nil))
+        let mimeType = guessMimeType(path, data)
+        let encodingName: String? = ["text/html"].contains(mimeType) ? guessEncoding(data) : nil
+        urlSchemeTask.didReceive(URLResponse(url: urlSchemeTask.request.url!, mimeType: mimeType,
+                                             expectedContentLength: data.count, textEncodingName: encodingName))
         urlSchemeTask.didReceive(data)
         urlSchemeTask.didFinish()
     }
 
     func webView(_ webView: WKWebView, stop urlSchemeTask: WKURLSchemeTask) {
-        print("Function: \(#function), line: \(#line)")
-        print("==> \(urlSchemeTask.request.url?.absoluteString ?? "")\n")
+        print("stoping \(urlSchemeTask.request.url?.absoluteString ?? "")\n")
     }
 }

@@ -9,49 +9,17 @@ import Foundation
 
 class CHMFile {
     let fd: OpaquePointer
-    var path_mapping: Dictionary<String, CHMUnit>
+    let path_mapping: Dictionary<String, CHMUnit>
+    // pages may not needed in future, use it before has toc feature
     let pages: [CHMUnit]
+    let items: [CHMUnit]
     
     init(filename: String) {
         fd = chm_open(filename)
-        path_mapping = Dictionary<String, CHMUnit>()
-        var len: Int = 0
-        let filter = CHM_ENUMERATE_NORMAL + CHM_ENUMERATE_FILES + CHM_ENUMERATE_DIRS
-        chm_enumerate(fd, filter, {(file, item, p) in
-            let pres = p!.assumingMemoryBound(to: Int.self)
-            pres.pointee += 1
-            return CHM_ENUMERATOR_CONTINUE
-        }, &len)
-        var res = ([CHMUnit](repeating: CHMUnit(), count: len), 0)
-        chm_enumerate(fd, filter, {(file, item, p) in
-            let pres = p!.assumingMemoryBound(to: ([CHMUnit], Int).self)
-            let unit = CHMUnit(c: item)
-            print("unit: \(unit.path), \(unit.flagList()), \(unit.length)")
-            pres.pointee.0[pres.pointee.1] = unit
-            pres.pointee.1 += 1
-            
-            return CHM_ENUMERATOR_CONTINUE
-        }, &res)
-        
-        let items = res.0
-        for i in items {
-            path_mapping[i.path] = i
-        }
-        
-        for i in items {
-            let path = i.path.prefix(i.path.count - 1)
-            let idx = path.lastIndex(of: "/")
-            if idx == nil {
-                continue
-            }
-            let ppath = String(i.path.prefix(through: idx!))
-            path_mapping[ppath] = path_mapping[ppath] ?? CHMUnit()
-            path_mapping[ppath]!.children = path_mapping[ppath]!.children ?? []
-            path_mapping[ppath]!.children!.append(i)
-            i.parent = path_mapping[ppath]
-        }
-        
-        pages = items
+        let limited = listCHMUnit(fd, filter: CHM_ENUMERATE_NORMAL + CHM_ENUMERATE_FILES + CHM_ENUMERATE_DIRS)
+        pages = limited.0
+        path_mapping = limited.1
+        items = listCHMUnit(fd, filter: CHM_ENUMERATE_ALL).0
     }
     
     deinit {
@@ -104,7 +72,6 @@ class CHMFile {
     }
     
     func urlCallback(path: String) -> Data {
-        print("Getting \(path)")
         let unit = UnsafeMutablePointer<chmUnitInfo>.allocate(capacity: 1)
         unit.pointee.start = 0
         unit.pointee.length = 0
@@ -123,6 +90,46 @@ class CHMFile {
         unit.deallocate()
         return res
     }
+}
+
+func listCHMUnit(_ fd: OpaquePointer, filter: Int32) -> ([CHMUnit], Dictionary<String, CHMUnit>) {
+    var path_mapping = Dictionary<String, CHMUnit>()
+    var len: Int = 0
+    chm_enumerate(fd, filter, {(file, item, p) in
+        let pres = p!.assumingMemoryBound(to: Int.self)
+        pres.pointee += 1
+        return CHM_ENUMERATOR_CONTINUE
+    }, &len)
+    var res = ([CHMUnit](repeating: CHMUnit(), count: len), 0)
+    chm_enumerate(fd, filter, {(file, item, p) in
+        let pres = p!.assumingMemoryBound(to: ([CHMUnit], Int).self)
+        let unit = CHMUnit(c: item)
+        print("unit: \(unit.path), \(unit.flagList()), \(unit.length)")
+        pres.pointee.0[pres.pointee.1] = unit
+        pres.pointee.1 += 1
+        
+        return CHM_ENUMERATOR_CONTINUE
+    }, &res)
+    
+    let items = res.0
+    for i in items {
+        path_mapping[i.path] = i
+    }
+    
+    for i in items {
+        let path = i.path.prefix(i.path.count - 1)
+        let idx = path.lastIndex(of: "/")
+        if idx == nil {
+            continue
+        }
+        let ppath = String(i.path.prefix(through: idx!))
+        path_mapping[ppath] = path_mapping[ppath] ?? CHMUnit()
+        path_mapping[ppath]!.children = path_mapping[ppath]!.children ?? []
+        path_mapping[ppath]!.children!.append(i)
+        i.parent = path_mapping[ppath]
+    }
+    
+    return (items, path_mapping)
 }
 
 

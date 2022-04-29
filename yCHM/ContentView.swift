@@ -11,7 +11,6 @@ import CoreData
 
 struct ContentView: View {
     @State var location: CHMLocation
-    // TODO: replace to CHM unit to a better object with key and tree support
     @State var units: [CHMUnit]
     @State var chm: CHMFile? = nil
     @State var selector: selectorType = .tree
@@ -24,7 +23,7 @@ struct ContentView: View {
                 Button(action: {() in
                     let filename = docPicker.display()!
                     chm = CHMFile(filename: filename)
-                    units = chm!.list()
+                    units = chm?.pages ?? []
                     unitSelected(path: chm!.entryPoint())
                 }, label: {
                     Text("Open")
@@ -33,13 +32,21 @@ struct ContentView: View {
             HStack {
                 VStack {
                     HStack {
-                        Button(action: {() in selector = .flat
+                        Button(action: {() in
+                            selector = .flat
+                            units = chm?.pages ?? []
                         }, label: {
                             Text("flat")
                         })
                         Button(action: {() in selector = .tree
+                            units = chm?.items ?? []
                         }, label: {
                             Text("tree")
+                        })
+                        Button(action: {() in selector = .tree
+                            units = chm?.pages ?? []
+                        }, label: {
+                            Text("html")
                         })
                     }
                     switch selector {
