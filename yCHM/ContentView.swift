@@ -14,22 +14,41 @@ struct ContentView: View {
     // TODO: replace to CHM unit to a better object with key and tree support
     @State var units: [CHMUnit]
     @State var chm: CHMFile? = nil
+    @State var selector: selectorType = .tree
     
     let docPicker = DocPicker()
     
     var body: some View {
         VStack {
-            Button(action: {() in
-                let filename = docPicker.display()!
-                chm = CHMFile(filename: filename)
-                units = chm!.list()
-                unitSelected(path: chm!.entryPoint())
-            }, label: {
-                Text("Open")
-            })
             HStack {
-                FlatView(items: $units, onClick: self.unitSelected)
-                TreeView(items: $units, onClick: self.unitSelected)
+                Button(action: {() in
+                    let filename = docPicker.display()!
+                    chm = CHMFile(filename: filename)
+                    units = chm!.list()
+                    unitSelected(path: chm!.entryPoint())
+                }, label: {
+                    Text("Open")
+                })
+            }
+            HStack {
+                VStack {
+                    HStack {
+                        Button(action: {() in selector = .flat
+                        }, label: {
+                            Text("flat")
+                        })
+                        Button(action: {() in selector = .tree
+                        }, label: {
+                            Text("tree")
+                        })
+                    }
+                    switch selector {
+                    case .flat: FlatView(items: $units, onClick: self.unitSelected)
+                    case .tree: TreeView(items: $units, onClick: self.unitSelected)
+                    }
+                }.frame(minWidth: 100, idealWidth: 200, maxWidth: 200, minHeight: /*@START_MENU_TOKEN@*/0/*@END_MENU_TOKEN@*/, idealHeight: .infinity, maxHeight: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                
+                
                 WebView(location: $location)
                     .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
             }
@@ -61,4 +80,9 @@ struct ContentView_Previews: PreviewProvider {
 struct CHMLocation {
     var path: String
     var urlCallback: (String) -> Data = { _ in print("Empty URL callback"); return Data()}
+}
+
+enum selectorType {
+    case flat
+    case tree
 }
