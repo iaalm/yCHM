@@ -31,7 +31,8 @@ func parseObject(element: Element, parent: CHMUnit? = nil) -> CHMUnit {
                 case "Name":
                     unit.name = try i.attr("value")
                 case "Local":
-                    unit.path = try i.attr("value")
+                    let path = try i.attr("value")
+                    unit.path = path.starts(with: "/") ? path : "/" + path
                 default:
                     print("unknown param \(pName)")
                 }
