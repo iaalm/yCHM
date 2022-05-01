@@ -9,18 +9,12 @@ import Foundation
 
 class CHMFile {
     let fd: OpaquePointer
-    let path_mapping: Dictionary<String, CHMUnit>
-    // pages may not needed in future, use it before has toc feature
-    let pages: [CHMUnit]
     let items: [CHMUnit]
     let index: [CHMUnit]
     let tree: [CHMUnit]
     
     init(filename: String) {
         fd = chm_open(filename)
-        let limited = listCHMUnit(fd, filter: CHM_ENUMERATE_NORMAL + CHM_ENUMERATE_FILES + CHM_ENUMERATE_DIRS)
-        pages = limited.0
-        path_mapping = limited.1
         items = listCHMUnit(fd, filter: CHM_ENUMERATE_ALL).0
         let hhcPath = items.first(where: {$0.path.lowercased().hasSuffix(".hhc")})?.path
         // if hhc == nil
@@ -35,44 +29,7 @@ class CHMFile {
     deinit {
         chm_close(fd)
     }
-    
-    func list() -> [CHMUnit] {
-        return pages
-    }
-    
-    func getPageTree() -> CHMUnit {
-        return pages[0]
-    }
-//
-//    func first() -> String {
-//        let buf = UnsafeMutablePointer<UnsafeMutablePointer<UInt8>>.allocate(capacity: 1)
-//        let type = CHM_ENUMERATE_FILES + CHM_ENUMERATE_NORMAL
-//        chm_enumerate(fd, type, {(file, item, p) in
-//            let pres = p!.assumingMemoryBound(to: UnsafeMutablePointer<UInt8>.self)
-//            let len = item!.pointee.length
-//            let buf = UnsafeMutablePointer<UInt8>.allocate(capacity: Int(len))
-//            chm_retrieve_object(file, item, buf, 0, LONGINT64(len))
-//            pres.pointee = buf
-//
-//            return CHM_ENUMERATOR_SUCCESS
-//        }, buf)
-//
-//        let res = decodeString(ptr: buf.pointee)
-//        buf.pointee.deallocate()
-//        return res
-//    }
-    
-//    func get(unit: CHMUnit) -> String {
-//        let ui = unit.allocCType()
-//        let buf = UnsafeMutablePointer<UInt8>.allocate(capacity: Int(unit.length))
-//        chm_retrieve_object(fd, ui, buf, 0, LONGINT64(unit.length))
-//        // TODO: maybe remove this function along with Encoding helpers
-//        let res = decodeString(ptr: buf, len: Int(unit.length))
-//        buf.deallocate()
-//
-//        return res
-//    }
-    
+
     func entryPoint () -> String {
         var item = tree[0]
         while item.children?[0] != nil {
