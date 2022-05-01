@@ -13,6 +13,8 @@ class CHMFile {
     // pages may not needed in future, use it before has toc feature
     let pages: [CHMUnit]
     let items: [CHMUnit]
+    let index: [CHMUnit]
+    let tree: [CHMUnit]
     
     init(filename: String) {
         fd = chm_open(filename)
@@ -20,6 +22,14 @@ class CHMFile {
         pages = limited.0
         path_mapping = limited.1
         items = listCHMUnit(fd, filter: CHM_ENUMERATE_ALL).0
+        let hhcPath = items.first(where: {$0.path.lowercased().hasSuffix(".hhc")})?.path
+        // if hhc == nil
+        let hhcData = getUrlContent(fd, path: hhcPath!)
+        index = parseIndex(hhcData)[0].children ?? []
+        let hhkPath = items.first(where: {$0.path.lowercased().hasSuffix(".hhk")})?.path
+        // if hhk == nil
+        let hhkData = getUrlContent(fd, path: hhkPath!)
+        tree = parseIndex(hhkData)
     }
     
     deinit {
@@ -52,16 +62,16 @@ class CHMFile {
 //        return res
 //    }
     
-    func get(unit: CHMUnit) -> String {
-        let ui = unit.allocCType()
-        let buf = UnsafeMutablePointer<UInt8>.allocate(capacity: Int(unit.length))
-        chm_retrieve_object(fd, ui, buf, 0, LONGINT64(unit.length))
-        // TODO: maybe remove this function along with Encoding helpers
-        let res = decodeString(ptr: buf, len: Int(unit.length))
-        buf.deallocate()
-        
-        return res
-    }
+//    func get(unit: CHMUnit) -> String {
+//        let ui = unit.allocCType()
+//        let buf = UnsafeMutablePointer<UInt8>.allocate(capacity: Int(unit.length))
+//        chm_retrieve_object(fd, ui, buf, 0, LONGINT64(unit.length))
+//        // TODO: maybe remove this function along with Encoding helpers
+//        let res = decodeString(ptr: buf, len: Int(unit.length))
+//        buf.deallocate()
+//
+//        return res
+//    }
     
     func entryPoint () -> String {
         let units = self.list()
@@ -72,6 +82,11 @@ class CHMFile {
     }
     
     func urlCallback(path: String) -> Data {
+        return getUrlContent(fd, path: path)
+    }
+}
+
+func getUrlContent(_ fd: OpaquePointer, path: String) -> Data {
         let unit = UnsafeMutablePointer<chmUnitInfo>.allocate(capacity: 1)
         unit.pointee.start = 0
         unit.pointee.length = 0
@@ -89,7 +104,6 @@ class CHMFile {
         buf.deallocate()
         unit.deallocate()
         return res
-    }
 }
 
 func listCHMUnit(_ fd: OpaquePointer, filter: Int32) -> ([CHMUnit], Dictionary<String, CHMUnit>) {
@@ -104,7 +118,7 @@ func listCHMUnit(_ fd: OpaquePointer, filter: Int32) -> ([CHMUnit], Dictionary<S
     chm_enumerate(fd, filter, {(file, item, p) in
         let pres = p!.assumingMemoryBound(to: ([CHMUnit], Int).self)
         let unit = CHMUnit(c: item)
-        print("unit: \(unit.path), \(unit.flagList()), \(unit.length)")
+        // print("unit: \(unit.path), \(unit.flagList()), \(unit.length)")
         pres.pointee.0[pres.pointee.1] = unit
         pres.pointee.1 += 1
         
@@ -131,5 +145,4 @@ func listCHMUnit(_ fd: OpaquePointer, filter: Int32) -> ([CHMUnit], Dictionary<S
     
     return (items, path_mapping)
 }
-
 

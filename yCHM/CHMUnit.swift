@@ -8,29 +8,35 @@
 import Foundation
 
 class CHMUnit: Identifiable {
+    var name: String
     var parent: CHMUnit? = nil
     var children: [CHMUnit]? = nil
-    let path: String
+    var path: String
     let flags: Int32
-    let space: Int32
-    let start: UInt64
     let length: UInt64
     
     init() {
         self.path = ""
+        self.name = ""
         self.flags = 0
-        self.space = 0
-        self.start  = 0
         self.length = 0
     }
     
     init(path:String, children: [CHMUnit]? = nil) {
         self.flags = 0
-        self.space = 0
-        self.start  = 0
-        self.length = 0
         self.path = path
         self.children = children
+        self.length = 0
+        self.name = getNameFromPath(path)
+        children?.forEach({$0.parent = self})
+    }
+    
+    init(name: String, path:String, children: [CHMUnit]? = nil) {
+        self.name = name
+        self.flags = 0
+        self.path = path
+        self.children = children
+        self.length = 0
         children?.forEach({$0.parent = self})
     }
     
@@ -40,33 +46,10 @@ class CHMUnit: Identifiable {
             let ptr = rawPtr.baseAddress!.assumingMemoryBound(to: CChar.self)
             return String(cString: ptr)
         }
-        flags = c!.pointee.flags
-        space = c!.pointee.space
-        start = c!.pointee.start
-        length = c!.pointee.length
-    }
-    
-    var name: String {
-        get {
-            let seg = path.split(separator: "/")
-            for i in seg.reversed() {
-                if i.count > 0 {
-                    return String(i)
-                }
-            }
-            return "root"
-        }
-    }
-    
-    func allocCType() -> UnsafeMutablePointer<chmUnitInfo>{
-        let c = UnsafeMutablePointer<chmUnitInfo>.allocate(capacity: 1)
-        c.pointee.flags = flags
-        c.pointee.space = space
-        c.pointee.start = start
-        c.pointee.length = length
-        // ignore path for now
         
-        return c
+        self.name = getNameFromPath(path)
+        flags = c!.pointee.flags
+        length = c!.pointee.length
     }
     
     func flagList() -> [String] {
@@ -84,6 +67,16 @@ class CHMUnit: Identifiable {
         })
         return res
     }
+}
+
+func getNameFromPath(_ path: String) -> String {
+    let seg = path.split(separator: "/")
+    for i in seg.reversed() {
+        if i.count > 0 {
+            return String(i)
+        }
+    }
+    return "root"
 }
 
 extension Array where ArrayLiteralElement: CHMUnit {

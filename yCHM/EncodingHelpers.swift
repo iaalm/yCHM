@@ -7,18 +7,35 @@
 
 import Foundation
 
+let encodingMapping = [
+    "gb2312": String.Encoding(rawValue: CFStringConvertEncodingToNSStringEncoding(CFStringEncoding(CFStringEncodings.GB_18030_2000.rawValue))),
+    "ascii": String.Encoding.ascii,
+    "utf8": String.Encoding.utf8
+]
+
+let encodingList = encodingMapping.map({($0, $1)})
+
+let extensionMimeMapping = [
+    "html": "text/html",
+    "htm": "text/html",
+    "jpeg": "image/jpeg",
+    "jpg": "image/jpeg"
+]
+
 func decodeString(ptr: UnsafeMutablePointer<UInt8>, len: Int) -> String {
-    let encodingMapping = [
-        "gb2312": String.Encoding(rawValue: CFStringConvertEncodingToNSStringEncoding(CFStringEncoding(CFStringEncodings.GB_18030_2000.rawValue)))
-    ]
-    let firstTry = String(cString: ptr)
-    let encodingStr = getEncoding(str: firstTry) ?? "utf8"
+    return decodeString(data: Data(bytes: ptr, count: len))
+}
+
+func decodeString(data: Data) -> String {
+    let firstTry = String(data: data, encoding: .ascii)!
+    let encodingStr = getEncoding(str: firstTry) ?? "ascii"
     let encoding = encodingMapping[encodingStr]
     if (encoding != nil) {
-        return String(data: Data(bytes: ptr, count: len), encoding: encoding!)!
+        return String(data: data, encoding: encoding!)!
     }
     else {
-        return firstTry
+        let guessedEncoding = guessEncoding(data)
+        return String(data: data, encoding: encodingMapping[guessedEncoding] ?? .ascii)!
     }
 }
 
@@ -41,9 +58,7 @@ func guessEncoding(_ data: Data) -> String {
         return encoding!
     }
     
-    let bestGuess = [
-        ("gb2312", String.Encoding(rawValue: CFStringConvertEncodingToNSStringEncoding(CFStringEncoding(CFStringEncodings.GB_18030_2000.rawValue))))
-    ].map({(e) -> (String, Int) in
+    let bestGuess = encodingList.map({(e) -> (String, Int) in
         let tryRes = String(data: data, encoding: e.1)
         let wrong = tryRes?.filter({$0 == "\u{fd}"}).count ?? Int.max
         print("Guess \(e.0), \(wrong)")
@@ -55,12 +70,6 @@ func guessEncoding(_ data: Data) -> String {
     return bestGuess!.0
 }
 
-let extensionMimeMapping = [
-    "html": "text/html",
-    "htm": "text/html",
-    "jpeg": "image/jpeg",
-    "jpg": "image/jpeg"
-]
 
 func guessMimeType(_ filename: String, _ data: Data) -> String {
     let extName = String(
