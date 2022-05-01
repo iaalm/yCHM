@@ -25,11 +25,11 @@ class CHMFile {
         let hhcPath = items.first(where: {$0.path.lowercased().hasSuffix(".hhc")})?.path
         // if hhc == nil
         let hhcData = getUrlContent(fd, path: hhcPath!)
-        index = parseIndex(hhcData)[0].children ?? []
+        tree = parseIndex(hhcData)
         let hhkPath = items.first(where: {$0.path.lowercased().hasSuffix(".hhk")})?.path
         // if hhk == nil
         let hhkData = getUrlContent(fd, path: hhkPath!)
-        tree = parseIndex(hhkData)
+        index = parseIndex(hhkData)[0].children ?? []
     }
     
     deinit {
@@ -74,11 +74,12 @@ class CHMFile {
 //    }
     
     func entryPoint () -> String {
-        let units = self.list()
-        let unit = units.first(where: {(unit) in
-            unit.path.contains(".html")
-        })!
-        return unit.path
+        var item = tree[0]
+        while item.children?[0] != nil {
+            item = item.children![0]
+        }
+        
+        return item.path
     }
     
     func urlCallback(path: String) -> Data {

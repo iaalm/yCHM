@@ -12,7 +12,7 @@ import CoreData
 struct ContentView: View {
     @State var location: CHMLocation
     @State var chm: CHMFile? = nil
-    @State var selector: selectorType = .object
+    @State var selector: selectorType = .tree
     
     @State var index: [CHMUnit] = []
     @State var tree: [CHMUnit] = []

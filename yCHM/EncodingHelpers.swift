@@ -20,8 +20,16 @@ func decodeString(ptr: UnsafeMutablePointer<UInt8>, len: Int) -> String {
 
 func decodeString(data: Data) -> String {
     var convertedString: NSString?
-    let encoding = NSString.stringEncoding(for: data, encodingOptions: nil, convertedString: &convertedString, usedLossyConversion: nil)
-    print(encodingToTextName(encoding)!)
+    // 11 means windows-1251 which cause some issue for chinese
+    let encodingOpt: [StringEncodingDetectionOptionsKey : [NSNumber]]  = [.disallowedEncodingsKey: [11]]
+    var lossy: ObjCBool = true
+    let encoding = NSString.stringEncoding(for: data, encodingOptions: encodingOpt, convertedString: &convertedString, usedLossyConversion: &lossy)
+    print("get \(encodingToTextName(encoding)!) (\(encoding)) lossy \(lossy)")
+    if lossy.boolValue == true {
+        let encoding_all = NSString.stringEncoding(for: data, encodingOptions: encodingOpt, convertedString: &convertedString, usedLossyConversion: &lossy)
+        print("use \(encodingToTextName(encoding_all)!) (\(encoding)) lossy \(lossy)")
+        
+    }
     return convertedString! as String
 }
 

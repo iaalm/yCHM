@@ -12,39 +12,53 @@ func parseIndex(_ data: Data) -> [CHMUnit] {
     let htmlStr = decodeString(data: data)
     do {
         let doc = try SwiftSoup.parse(htmlStr)
-        return [parseObject(element: doc.body()!)]
+        return [parseDir(element: doc.body()!)]
     } catch {
         print("parse error")
         return []
     }
 }
 
-func parseObject(element: Element, parent: CHMUnit? = nil) -> CHMUnit {
+func parseDir(element: Element, parent: CHMUnit? = nil) -> CHMUnit {
     let unit = CHMUnit()
-    unit.children = []
+    unit.name = "directory"
     for i in element.children() {
         switch i.tagName(){
-        case "param":
-            do {
-                let pName = try i.attr("name")
-                switch pName {
-                case "Name":
-                    unit.name = try i.attr("value")
-                case "Local":
-                    let path = try i.attr("value")
-                    unit.path = path.starts(with: "/") ? path : "/" + path
+        case "object":
+            for j in i.children() {
+                switch j.tagName(){
+                case "param":
+                    do {
+                        let pName = try j.attr("name")
+                        switch pName {
+                        case "Name":
+                            unit.name = try j.attr("value")
+                        case "Local":
+                            let path = try j.attr("value")
+                            unit.path = path.starts(with: "/") ? path : "/" + path
+                        case "ImageNumber":
+                            // TODO: figure out what "ImageNumber" means
+                            break
+                        case "Font":
+                            break
+                        case "ExWindow Styles":
+                            break
+                        case "Window Styles":
+                            break
+                        default:
+                            print("unknown param \(pName)")
+                        }
+                    } catch {
+                        print("get html error")
+                    }
                 default:
-                    print("unknown param \(pName)")
+                    print("unknown tag \(j.tagName())")
                 }
-            } catch {
-                print("get html error")
             }
         case "ul":
-            for li in i.children() {
-                if li.children().count != 1 {
-                    print("li children count \(li.children().count)")
-                }
-                unit.children?.append(parseObject(element: li.child(0), parent: unit))
+            unit.children = []
+            for j in i.children() {
+                unit.children!.append(parseDir(element: j, parent: unit))
             }
         default:
             print("unknown tag \(i.tagName())")
