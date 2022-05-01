@@ -12,7 +12,7 @@ import CoreData
 struct ContentView: View {
     @State var location: CHMLocation
     @State var chm: CHMFile? = nil
-    @State var selector: selectorType = .tree
+    @State var selector: selectorType = .object
     
     @State var index: [CHMUnit] = []
     @State var tree: [CHMUnit] = []
@@ -41,17 +41,17 @@ struct ContentView: View {
                             selector = .flat
                         }, label: {
                             Text("flat")
-                        })
-                        Button(action: {() in selector = .tree
+                        }).disabled(selector == .flat)
+                        Button(action: {() in
                             selector = .tree
                         }, label: {
                             Text("tree")
-                        })
-                        Button(action: {() in selector = .tree
+                        }).disabled(selector == .tree)
+                        Button(action: {() in
                             selector = .object
                         }, label: {
                             Text("object")
-                        })
+                        }).disabled(selector == .object)
                     }
                     switch selector {
                     case .flat: FlatView(items: $index, onClick: self.unitSelected)
