@@ -9,9 +9,19 @@ import Foundation
 
 let extensionMimeMapping = [
     "html": "text/html",
-    "htm": "text/html",
+    "htm":  "text/html",
+    "css":  "text/css",
+    "gif":  "image/gif",
+    "jpg":  "image/jpeg",
     "jpeg": "image/jpeg",
-    "jpg": "image/jpeg"
+    "jpe":  "image/jpeg",
+    "bmp":  "image/bitmap",
+    "png":  "image/png"
+]
+
+let txtMimeTypes = [
+    "text/css",
+    "text/html"
 ]
 
 func decodeString(ptr: UnsafeMutablePointer<UInt8>, len: Int) -> String {

@@ -52,7 +52,7 @@ func parseDir(element: Element, parent: CHMUnit? = nil) -> CHMUnit {
                         print("get html error")
                     }
                 default:
-                    print("unknown tag \(j.tagName())")
+                    print("unknown object tag \(j.tagName())")
                 }
             }
         case "ul":
@@ -61,7 +61,7 @@ func parseDir(element: Element, parent: CHMUnit? = nil) -> CHMUnit {
                 unit.children!.append(parseDir(element: j, parent: unit))
             }
         default:
-            print("unknown tag \(i.tagName())")
+            print("unknown item tag \(i.tagName())")
         }
     }
     return unit

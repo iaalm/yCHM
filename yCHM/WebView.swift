@@ -36,7 +36,7 @@ class WebViewURLSchemeHandler: NSObject, WKURLSchemeHandler {
         print("retrieval \(path)")
         let data = self.location.urlCallback(path)
         let mimeType = guessMimeType(path, data)
-        let encodingName: String? = ["text/html"].contains(mimeType) ? guessEncoding(data) : nil
+        let encodingName: String? = txtMimeTypes.contains(mimeType) ? guessEncoding(data) : nil
         urlSchemeTask.didReceive(URLResponse(url: urlSchemeTask.request.url!, mimeType: mimeType,
                                              expectedContentLength: data.count, textEncodingName: encodingName))
         urlSchemeTask.didReceive(data)
