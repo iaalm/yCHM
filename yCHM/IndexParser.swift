@@ -12,7 +12,7 @@ func parseIndex(_ data: Data) -> [CHMUnit] {
     let htmlStr = decodeString(data: data)
     do {
         let doc = try SwiftSoup.parse(htmlStr)
-        return [parseDir(element: doc.body()!)]
+        return parseDir(element: doc.body()!).children ?? []
     } catch {
         print("parse error")
         return []

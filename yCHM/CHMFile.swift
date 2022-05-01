@@ -29,7 +29,7 @@ class CHMFile {
         let hhkPath = items.first(where: {$0.path.lowercased().hasSuffix(".hhk")})?.path
         // if hhk == nil
         let hhkData = getUrlContent(fd, path: hhkPath!)
-        index = parseIndex(hhkData)[0].children ?? []
+        index = parseIndex(hhkData)
     }
     
     deinit {
