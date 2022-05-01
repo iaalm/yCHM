@@ -26,7 +26,7 @@ func decodeString(data: Data) -> String {
 }
 
 func getEncoding(str: String) -> String? {
-    let validChar = "abcderghijklmnopqrstuvwxyz0123456789"
+    let validChar = "abcderghijklmnopqrstuvwxyz0123456789-"
     let startIdx = str.range(of: "charset=")?.upperBound
     if startIdx == nil {
         return nil

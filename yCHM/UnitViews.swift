@@ -35,7 +35,7 @@ struct UnitView: View {
     let onClick: (String) -> Void
     
     var body: some View {
-        Button(action: { if unit.length != 0 { onClick(unit.path)}}) {
+        Button(action: { onClick(unit.path) }) {
             Text(unit.name)
         }.buttonStyle(PlainButtonStyle())
     }

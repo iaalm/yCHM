@@ -54,7 +54,7 @@ struct ContentView: View {
                         })
                     }
                     switch selector {
-                    case .flat: FlatView(items: $index , onClick: self.unitSelected)
+                    case .flat: FlatView(items: $index, onClick: self.unitSelected)
                     case .tree: TreeView(items: $tree, onClick: self.unitSelected)
                     case .object: TreeView(items: $object, onClick: self.unitSelected)
                     }
