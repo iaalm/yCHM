@@ -30,13 +30,13 @@ class CHMFile {
         chm_close(fd)
     }
 
-    func entryPoint () -> String {
+    func entryPoint () -> CHMUnit {
         var item = tree[0]
         while item.children?[0] != nil {
             item = item.children![0]
         }
         
-        return item.path
+        return item
     }
     
     func urlCallback(path: String) -> Data {

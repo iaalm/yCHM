@@ -29,7 +29,7 @@ struct ContentView: View {
                     index = chm!.index
                     tree = chm!.tree
                     object = chm!.items
-                    unitSelected(path: chm!.entryPoint())
+                    unitSelected(unit: chm!.entryPoint())
                 }, label: {
                     Text("Open")
                 })
@@ -68,9 +68,9 @@ struct ContentView: View {
         }
     }
     
-    func unitSelected(path: String) {
-        print(path)
-        self.location = CHMLocation(path: path, urlCallback: chm!.urlCallback)
+    func unitSelected(unit: CHMUnit) {
+        print("Select \(unit.name), \(unit.path)")
+        self.location = CHMLocation(path: unit.path, urlCallback: chm!.urlCallback)
     }
 }
 

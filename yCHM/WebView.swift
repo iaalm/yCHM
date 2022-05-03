@@ -21,7 +21,12 @@ struct WebView: NSViewRepresentable {
     func updateNSView(_ uiView: WKWebView, context: Context) {
         // uiView.loadHTMLString(text, baseURL: nil)
         let escapedPath = location.path.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed)!
-        uiView.load(URLRequest(url: URL(string:escapedPath, relativeTo: baseUrl)!))
+        let url = URL(string:escapedPath, relativeTo: baseUrl)
+        if url != nil {
+            uiView.load(URLRequest(url: url!))
+        } else {
+                print("invalid path \(location.path)")
+        }
     }}
 
 class WebViewURLSchemeHandler: NSObject, WKURLSchemeHandler {

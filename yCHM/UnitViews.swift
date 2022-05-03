@@ -10,7 +10,7 @@ import SwiftUI
 
 struct FlatView: View {
     @Binding var items: [CHMUnit]
-    let onClick: (String) -> Void
+    let onClick: (CHMUnit) -> Void
     
     var body: some View {
         List(items, id: \.id) { unit in
@@ -21,7 +21,7 @@ struct FlatView: View {
 
 struct TreeView: View {
     @Binding var items: [CHMUnit]
-    let onClick: (String) -> Void
+    let onClick: (CHMUnit) -> Void
     
     var body: some View {
         List(items.filter({ $0.parent == nil }), id: \.id, children: \.children) { unit in
@@ -32,10 +32,10 @@ struct TreeView: View {
 
 struct UnitView: View {
     var unit: CHMUnit
-    let onClick: (String) -> Void
+    let onClick: (CHMUnit) -> Void
     
     var body: some View {
-        Button(action: { onClick(unit.path) }) {
+        Button(action: { onClick(unit) }) {
             Text(unit.name)
         }.buttonStyle(PlainButtonStyle())
     }
