@@ -25,7 +25,7 @@ struct WebView: NSViewRepresentable {
         if url != nil {
             uiView.load(URLRequest(url: url!))
         } else {
-                print("invalid path \(location.path)")
+            print("invalid path \(location.path)")
         }
     }}
 
