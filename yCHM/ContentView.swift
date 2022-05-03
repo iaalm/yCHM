@@ -25,15 +25,15 @@ struct ContentView: View {
             VStack {
                 HStack {
                     Button(action: {() in
-                        selector = .flat
-                    }, label: {
-                        Text("flat")
-                    }).disabled(selector == .flat)
-                    Button(action: {() in
                         selector = .tree
                     }, label: {
                         Text("tree")
                     }).disabled(selector == .tree)
+                    Button(action: {() in
+                        selector = .flat
+                    }, label: {
+                        Text("flat")
+                    }).disabled(selector == .flat)
                     Button(action: {() in
                         selector = .object
                     }, label: {
@@ -50,23 +50,27 @@ struct ContentView: View {
             .padding(.top, 5)
             
             WebView(location: $location)
-                .toolbar {
-                    ToolbarItemGroup(placement: .navigation) {
-                        Button(action: {() in
-                            let filename = docPicker.display()
-                            if filename != nil {
-                                chm = CHMFile(filename: filename!)
-                                index = chm!.index
-                                tree = chm!.tree
-                                object = chm!.items
-                                unitSelected(unit: chm!.entryPoint())
-                            }
-                        }, label: {
-                            Text("Open")
-                        })
-                    }
+            .toolbar {
+                ToolbarItemGroup(placement: .navigation) {
+                    Button(action: {() in
+                        let filename = docPicker.display()
+                        if filename != nil {
+                            fileOpened(filename!)
+                        }
+                    }, label: {
+                        Text("Open")
+                    })
                 }
+            }
         }
+    }
+    
+    func fileOpened(_ filename: String) {
+        chm = CHMFile(filename: filename)
+        index = chm!.index
+        tree = chm!.tree
+        object = chm!.items
+        unitSelected(unit: chm!.entryPoint())
     }
     
     func unitSelected(unit: CHMUnit) {
