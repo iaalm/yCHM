@@ -16,11 +16,11 @@
 		F430AD8C2812C3E600B71C40 /* yCHMTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F430AD8B2812C3E600B71C40 /* yCHMTests.swift */; };
 		F430AD972812C3E600B71C40 /* yCHMUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F430AD962812C3E600B71C40 /* yCHMUITests.swift */; };
 		F430ADA92812CE2500B71C40 /* chm_lib.c in Sources */ = {isa = PBXBuildFile; fileRef = F430ADA72812CE2500B71C40 /* chm_lib.c */; settings = {COMPILER_FLAGS = "-w"; }; };
-		F430ADAA2812CE2500B71C40 /* chm_lib.c in Sources */ = {isa = PBXBuildFile; fileRef = F430ADA72812CE2500B71C40 /* chm_lib.c */; };
-		F430ADAB2812CE2500B71C40 /* chm_lib.c in Sources */ = {isa = PBXBuildFile; fileRef = F430ADA72812CE2500B71C40 /* chm_lib.c */; };
+		F430ADAA2812CE2500B71C40 /* chm_lib.c in Sources */ = {isa = PBXBuildFile; fileRef = F430ADA72812CE2500B71C40 /* chm_lib.c */; settings = {COMPILER_FLAGS = "-w"; }; };
+		F430ADAB2812CE2500B71C40 /* chm_lib.c in Sources */ = {isa = PBXBuildFile; fileRef = F430ADA72812CE2500B71C40 /* chm_lib.c */; settings = {COMPILER_FLAGS = "-w"; }; };
 		F430ADAE2812CE3D00B71C40 /* lzx.c in Sources */ = {isa = PBXBuildFile; fileRef = F430ADAC2812CE3C00B71C40 /* lzx.c */; settings = {COMPILER_FLAGS = "-w"; }; };
-		F430ADAF2812CE3D00B71C40 /* lzx.c in Sources */ = {isa = PBXBuildFile; fileRef = F430ADAC2812CE3C00B71C40 /* lzx.c */; };
-		F430ADB02812CE3D00B71C40 /* lzx.c in Sources */ = {isa = PBXBuildFile; fileRef = F430ADAC2812CE3C00B71C40 /* lzx.c */; };
+		F430ADAF2812CE3D00B71C40 /* lzx.c in Sources */ = {isa = PBXBuildFile; fileRef = F430ADAC2812CE3C00B71C40 /* lzx.c */; settings = {COMPILER_FLAGS = "-w"; }; };
+		F430ADB02812CE3D00B71C40 /* lzx.c in Sources */ = {isa = PBXBuildFile; fileRef = F430ADAC2812CE3C00B71C40 /* lzx.c */; settings = {COMPILER_FLAGS = "-w"; }; };
 		F430ADB62812D4EC00B71C40 /* DocPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F430ADB52812D4EC00B71C40 /* DocPicker.swift */; };
 		F430ADB72812D4EC00B71C40 /* DocPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F430ADB52812D4EC00B71C40 /* DocPicker.swift */; };
 		F430ADB82812D4EC00B71C40 /* DocPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F430ADB52812D4EC00B71C40 /* DocPicker.swift */; };
@@ -33,6 +33,11 @@
 		F430ADC4281424F800B71C40 /* UnitViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = F430ADC3281424F800B71C40 /* UnitViews.swift */; };
 		F430ADC5281424F800B71C40 /* UnitViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = F430ADC3281424F800B71C40 /* UnitViews.swift */; };
 		F430ADC6281424F800B71C40 /* UnitViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = F430ADC3281424F800B71C40 /* UnitViews.swift */; };
+		F472E3C2282405A800ED3BC3 /* CHMUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4860745281AD5E200B81C3A /* CHMUnit.swift */; };
+		F472E3C3282405D400ED3BC3 /* IndexParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4860747281D751000B81C3A /* IndexParser.swift */; };
+		F472E3C4282405F600ED3BC3 /* CHMUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4860745281AD5E200B81C3A /* CHMUnit.swift */; };
+		F472E3C5282405F900ED3BC3 /* IndexParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4860747281D751000B81C3A /* IndexParser.swift */; };
+		F472E3C82824063D00ED3BC3 /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = F472E3C72824063D00ED3BC3 /* SwiftSoup */; };
 		F486074428196EBF00B81C3A /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F486074328196EBF00B81C3A /* WebView.swift */; };
 		F4860746281AD5E200B81C3A /* CHMUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4860745281AD5E200B81C3A /* CHMUnit.swift */; };
 		F4860748281D751000B81C3A /* IndexParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4860747281D751000B81C3A /* IndexParser.swift */; };
@@ -108,6 +113,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F472E3C82824063D00ED3BC3 /* SwiftSoup in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -121,6 +127,7 @@
 				F430AD8A2812C3E600B71C40 /* yCHMTests */,
 				F430AD952812C3E600B71C40 /* yCHMUITests */,
 				F430AD712812C3DE00B71C40 /* Products */,
+				F472E3C62824063D00ED3BC3 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -189,6 +196,13 @@
 			path = yCHMUITests;
 			sourceTree = "<group>";
 		};
+		F472E3C62824063D00ED3BC3 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -244,6 +258,9 @@
 				F430AD942812C3E600B71C40 /* PBXTargetDependency */,
 			);
 			name = yCHMUITests;
+			packageProductDependencies = (
+				F472E3C72824063D00ED3BC3 /* SwiftSoup */,
+			);
 			productName = yCHMUITests;
 			productReference = F430AD922812C3E600B71C40 /* yCHMUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
@@ -347,6 +364,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F472E3C3282405D400ED3BC3 /* IndexParser.swift in Sources */,
+				F472E3C2282405A800ED3BC3 /* CHMUnit.swift in Sources */,
 				F430ADBF28138D1B00B71C40 /* EncodingHelpers.swift in Sources */,
 				F430ADAF2812CE3D00B71C40 /* lzx.c in Sources */,
 				F430ADAA2812CE2500B71C40 /* chm_lib.c in Sources */,
@@ -361,6 +380,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F472E3C5282405F900ED3BC3 /* IndexParser.swift in Sources */,
+				F472E3C4282405F600ED3BC3 /* CHMUnit.swift in Sources */,
 				F430ADC028138D1B00B71C40 /* EncodingHelpers.swift in Sources */,
 				F430ADB02812CE3D00B71C40 /* lzx.c in Sources */,
 				F430ADAB2812CE2500B71C40 /* chm_lib.c in Sources */,
@@ -704,6 +725,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		F472E3C72824063D00ED3BC3 /* SwiftSoup */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F4860749281E253C00B81C3A /* XCRemoteSwiftPackageReference "SwiftSoup" */;
+			productName = SwiftSoup;
+		};
 		F486074A281E253C00B81C3A /* SwiftSoup */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = F4860749281E253C00B81C3A /* XCRemoteSwiftPackageReference "SwiftSoup" */;
