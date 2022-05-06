@@ -8,6 +8,8 @@
 import Foundation
 
 let extensionMimeMapping = [
+    "hhc": "text/plain",
+    "hhk": "text/plain",
     "html": "text/html",
     "htm":  "text/html",
     "css":  "text/css",
@@ -72,7 +74,7 @@ func guessMimeType(_ filename: String, _ data: Data) -> String {
         filename.suffix(
             from: filename.index(
                 filename.lastIndex(of: ".")
-                ?? filename.startIndex, offsetBy: 1 )))
+                    ?? filename.startIndex, offsetBy: 1 ))).lowercased()
     let mimeType = extensionMimeMapping[extName]
     if mimeType != nil {
         return mimeType!

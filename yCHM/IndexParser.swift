@@ -61,8 +61,18 @@ func parseDir(element: Element, parent: CHMUnit? = nil) -> CHMUnit {
                 unit.children!.append(parseDir(element: j, parent: unit))
             }
         default:
-            print("unknown item tag \(i.tagName())")
+            print("unknown item tag \(getDomPath(i))")
         }
     }
     return unit
+}
+
+func getDomPath(_ element: Element?) -> String {
+    var e = element
+    var res = ""
+    while e != nil {
+        res = ">" + e!.tagName() + res
+        e = e!.parent()
+    }
+    return res
 }

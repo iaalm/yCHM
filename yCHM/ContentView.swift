@@ -27,21 +27,21 @@ struct ContentView: View {
                     Button(action: {() in
                         selector = .tree
                     }, label: {
-                        Text("tree")
+                        Text("Tree")
                     }).disabled(selector == .tree)
                     Button(action: {() in
                         selector = .flat
                     }, label: {
-                        Text("flat")
+                        Text("Index")
                     }).disabled(selector == .flat)
                     Button(action: {() in
                         selector = .object
                     }, label: {
-                        Text("object")
+                        Text("Obj")
                     }).disabled(selector == .object)
                 }
                 switch selector {
-                case .flat: FlatView(items: $index, onClick: self.unitSelected)
+                case .flat: TreeView(items: $index, onClick: self.unitSelected)
                 case .tree: TreeView(items: $tree, onClick: self.unitSelected)
                 case .object: TreeView(items: $object, onClick: self.unitSelected)
                 }
