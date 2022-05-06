@@ -24,11 +24,42 @@ class yCHMUITests: XCTestCase {
 
     func testExample() throws {
         // UI tests must launch the application that they test.
+        let bundle = Bundle(for: type(of: self))
+        let chmpath = bundle.path(forResource: "PowerCollections", ofType: "chm")!
+        
         let app = XCUIApplication()
         app.launch()
 
         // Use recording to get started writing UI tests.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
+        
+        let addButton = app.windows.buttons["Open"]
+        XCTAssert(addButton.exists)
+        addButton.click()
+        let openDialog = app.dialogs.firstMatch
+        XCTAssert(openDialog.waitForExistence(timeout: 5))
+        // Make sure we're on the right type of dialog by checking the "Where:" popover button exists
+        // Also grab a reference to the Open button so we can click it later
+        let openButton = openDialog.buttons["Open"]
+        let whereButton = openDialog.popUpButtons["Where:"]
+        XCTAssert(whereButton.exists)
+        XCTAssert(openButton.exists)
+        app.typeKey("g", modifierFlags: [.command, .shift])
+        let sheet = openDialog.sheets.firstMatch
+        XCTAssert(sheet.waitForExistence(timeout: 5))
+        let goButton = openDialog.buttons["Go"]
+        let input = sheet.comboBoxes.firstMatch
+        XCTAssert(goButton.exists)
+        XCTAssert(input.exists)
+        input.typeText(chmpath)
+        goButton.click()
+        openButton.click()
+        
+        let ychmContentview1Appwindow1Window = XCUIApplication()/*@START_MENU_TOKEN@*/.windows["yCHM.ContentView-1-AppWindow-1"]/*[[".windows[\"yCHM\"]",".windows[\"yCHM.ContentView-1-AppWindow-1\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/
+        ychmContentview1Appwindow1Window/*@START_MENU_TOKEN@*/.outlines.children(matching: .outlineRow).element(boundBy: 1).disclosureTriangles["NSOutlineViewDisclosureButtonKey"]/*[[".scrollViews.outlines.children(matching: .outlineRow).element(boundBy: 1)",".cells.disclosureTriangles[\"NSOutlineViewDisclosureButtonKey\"]",".disclosureTriangles[\"NSOutlineViewDisclosureButtonKey\"]",".outlines.children(matching: .outlineRow).element(boundBy: 1)"],[[[-1,3,1],[-1,0,1]],[[-1,2],[-1,1]]],[0,0]]@END_MENU_TOKEN@*/.click()
+        let item = ychmContentview1Appwindow1Window/*@START_MENU_TOKEN@*/.outlines.buttons["Algorithms Methods"]/*[[".scrollViews.outlines",".outlineRows",".cells.buttons[\"Algorithms Methods\"]",".buttons[\"Algorithms Methods\"]",".outlines"],[[[-1,4,1],[-1,0,1]],[[-1,3],[-1,2],[-1,1,2]],[[-1,3],[-1,2]]],[0,0]]@END_MENU_TOKEN@*/
+        XCTAssert(item.waitForExistence(timeout: 5))
+        item.click()
     }
 
     func testLaunchPerformance() throws {

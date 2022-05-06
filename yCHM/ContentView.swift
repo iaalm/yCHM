@@ -53,10 +53,7 @@ struct ContentView: View {
             .toolbar {
                 ToolbarItemGroup(placement: .navigation) {
                     Button(action: {() in
-                        let filename = docPicker.display()
-                        if filename != nil {
-                            fileOpened(filename!)
-                        }
+                        fileOpened(docPicker.display())
                     }, label: {
                         Text("Open")
                     })
@@ -65,12 +62,14 @@ struct ContentView: View {
         }
     }
     
-    func fileOpened(_ filename: String) {
-        chm = CHMFile(filename: filename)
-        index = chm!.index
-        tree = chm!.tree
-        object = chm!.items
-        unitSelected(unit: chm!.entryPoint())
+    func fileOpened(_ filename: String?) {
+        if filename != nil {
+            chm = CHMFile(filename: filename!)
+            index = chm!.index
+            tree = chm!.tree
+            object = chm!.items
+            unitSelected(unit: chm!.entryPoint())
+        }
     }
     
     func unitSelected(unit: CHMUnit) {

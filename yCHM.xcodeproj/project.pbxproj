@@ -38,6 +38,8 @@
 		F472E3C4282405F600ED3BC3 /* CHMUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4860745281AD5E200B81C3A /* CHMUnit.swift */; };
 		F472E3C5282405F900ED3BC3 /* IndexParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4860747281D751000B81C3A /* IndexParser.swift */; };
 		F472E3C82824063D00ED3BC3 /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = F472E3C72824063D00ED3BC3 /* SwiftSoup */; };
+		F472E3CD28240B9300ED3BC3 /* PowerCollections.chm in Resources */ = {isa = PBXBuildFile; fileRef = F472E3CC28240B9300ED3BC3 /* PowerCollections.chm */; };
+		F472E3CE28240B9300ED3BC3 /* PowerCollections.chm in Resources */ = {isa = PBXBuildFile; fileRef = F472E3CC28240B9300ED3BC3 /* PowerCollections.chm */; };
 		F486074428196EBF00B81C3A /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F486074328196EBF00B81C3A /* WebView.swift */; };
 		F4860746281AD5E200B81C3A /* CHMUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4860745281AD5E200B81C3A /* CHMUnit.swift */; };
 		F4860748281D751000B81C3A /* IndexParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4860747281D751000B81C3A /* IndexParser.swift */; };
@@ -88,6 +90,7 @@
 		F430ADB92812D6FD00B71C40 /* CHMFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CHMFile.swift; sourceTree = "<group>"; };
 		F430ADBD28138D1B00B71C40 /* EncodingHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncodingHelpers.swift; sourceTree = "<group>"; };
 		F430ADC3281424F800B71C40 /* UnitViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitViews.swift; sourceTree = "<group>"; };
+		F472E3CC28240B9300ED3BC3 /* PowerCollections.chm */ = {isa = PBXFileReference; lastKnownFileType = file; path = PowerCollections.chm; sourceTree = "<group>"; };
 		F486074328196EBF00B81C3A /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		F4860745281AD5E200B81C3A /* CHMUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CHMUnit.swift; sourceTree = "<group>"; };
 		F4860747281D751000B81C3A /* IndexParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexParser.swift; sourceTree = "<group>"; };
@@ -190,6 +193,7 @@
 		F430AD952812C3E600B71C40 /* yCHMUITests */ = {
 			isa = PBXGroup;
 			children = (
+				F472E3CC28240B9300ED3BC3 /* PowerCollections.chm */,
 				F430AD962812C3E600B71C40 /* yCHMUITests.swift */,
 				F430AD982812C3E600B71C40 /* Info.plist */,
 			);
@@ -327,6 +331,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F472E3CD28240B9300ED3BC3 /* PowerCollections.chm in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -334,6 +339,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F472E3CE28240B9300ED3BC3 /* PowerCollections.chm in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
