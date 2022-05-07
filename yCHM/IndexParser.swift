@@ -12,59 +12,11 @@ func parseIndex(_ data: Data) -> [CHMUnit] {
     let htmlStr = decodeString(data: data)
     do {
         let doc = try SwiftSoup.parse(htmlStr)
-        return parseDir(element: doc.body()!).children ?? []
+        return parseBody(doc.body()!).children ?? []
     } catch {
         print("parse error")
         return []
     }
-}
-
-func parseDir(element: Element, parent: CHMUnit? = nil) -> CHMUnit {
-    let unit = CHMUnit()
-    unit.name = "directory"
-    for i in element.children() {
-        switch i.tagName(){
-        case "object":
-            for j in i.children() {
-                switch j.tagName(){
-                case "param":
-                    do {
-                        let pName = try j.attr("name")
-                        switch pName {
-                        case "Name":
-                            unit.name = try j.attr("value")
-                        case "Local":
-                            let path = try j.attr("value")
-                            unit.path = path.starts(with: "/") ? path : "/" + path
-                        case "ImageNumber":
-                            // TODO: figure out what "ImageNumber" means
-                            break
-                        case "Font":
-                            break
-                        case "ExWindow Styles":
-                            break
-                        case "Window Styles":
-                            break
-                        default:
-                            print("unknown param \(pName)")
-                        }
-                    } catch {
-                        print("get html error")
-                    }
-                default:
-                    print("unknown object tag \(j.tagName())")
-                }
-            }
-        case "ul":
-            unit.children = []
-            for j in i.children() {
-                unit.children!.append(parseDir(element: j, parent: unit))
-            }
-        default:
-            print("unknown item tag \(getDomPath(i))")
-        }
-    }
-    return unit
 }
 
 func getDomPath(_ element: Element?) -> String {
@@ -73,6 +25,104 @@ func getDomPath(_ element: Element?) -> String {
     while e != nil {
         res = ">" + e!.tagName() + res
         e = e!.parent()
+    }
+    return res
+}
+
+func parseObj(_ element: Element) -> CHMUnit {
+    let unit = CHMUnit()
+    for i in element.children() {
+        switch i.tagName(){
+        case "param":
+            do {
+                let pName = try i.attr("name")
+                switch pName {
+                case "Name":
+                    unit.name = try i.attr("value")
+                case "Local":
+                    let path = try i.attr("value")
+                    unit.path = path.starts(with: "/") ? path : "/" + path
+                case "ImageNumber":
+                    // TODO: figure out what "ImageNumber" means
+                    break
+                default:
+                    print("unknown param \(pName)")
+                }
+            } catch {
+                print("get html error")
+            }
+        default:
+            break
+        }
+    }
+    return unit
+}
+
+func parseUL(_ element: Element) -> [CHMUnit] {
+    var res: [CHMUnit] = []
+    for i in element.children() {
+        switch i.tagName() {
+        case "li":
+            let u = parseLI(i)
+            let uc = u.children
+            if uc == nil {
+                res.append(u)
+            } else {
+                // misplaced ul
+                let others = uc![1..<uc!.count]
+                u.children = uc![0].children
+                res.append(u)
+                res += others
+            }
+        case "ul":
+            let lastIdx = res.count - 1
+            if res[lastIdx].children == nil {
+                res[lastIdx].children = parseUL(i)
+            } else {
+                let u = CHMUnit()
+                u.children = parseUL(i)
+                res.append(u)
+            }
+        default:
+            print("Unknown tag \(#function) \(getDomPath(i))")
+        }
+    }
+    return res
+}
+
+func parseLI(_ element: Element) -> CHMUnit {
+    var res = CHMUnit()
+    for i in element.children() {
+        switch i.tagName() {
+        case "ul":
+            // misplaced ul
+            res.children = res.children ?? []
+            let u = CHMUnit()
+            u.children = parseUL(i)
+            res.children!.append(u)
+        case "object":
+            res = parseObj(i)
+        default:
+            print("Unknown tag \(#function) \(getDomPath(i))")
+        }
+    }
+    return res
+}
+
+func parseBody(_ element: Element) -> CHMUnit {
+    let res = CHMUnit()
+    for i in element.children() {
+        switch i.tagName() {
+        case "ul":
+            if res.children != nil {
+                print("multi ul found for body")
+            }
+            res.children = parseUL(i)
+        case "object":
+            break
+        default:
+            print("Unknown tag \(#function) \(getDomPath(i))")
+        }
     }
     return res
 }
