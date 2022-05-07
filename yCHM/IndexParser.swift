@@ -45,6 +45,8 @@ func parseObj(_ element: Element) -> CHMUnit {
                 case "ImageNumber":
                     // TODO: figure out what "ImageNumber" means
                     break
+                case "See Also":
+                    break
                 default:
                     print("unknown param \(pName)")
                 }
@@ -76,12 +78,13 @@ func parseUL(_ element: Element) -> [CHMUnit] {
             }
         case "ul":
             let lastIdx = res.count - 1
+            if lastIdx == -1 {
+                print("ul after nothing")
+            }
             if res[lastIdx].children == nil {
                 res[lastIdx].children = parseUL(i)
             } else {
-                let u = CHMUnit()
-                u.children = parseUL(i)
-                res.append(u)
+                res[lastIdx].children! += parseUL(i)
             }
         default:
             print("Unknown tag \(#function) \(getDomPath(i))")
