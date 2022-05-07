@@ -25,7 +25,7 @@ struct WebView: NSViewRepresentable {
         if url != nil {
             uiView.load(URLRequest(url: url!))
         } else {
-            print("invalid path \(location.path)")
+            logger.error("invalid path \(location.path)")
         }
     }}
 
@@ -38,7 +38,7 @@ class WebViewURLSchemeHandler: NSObject, WKURLSchemeHandler {
     
     func webView(_ webView: WKWebView, start urlSchemeTask: WKURLSchemeTask) {
         let path = urlSchemeTask.request.url!.path
-        print("retrieval \(path)")
+        logger.debug("retrieval \(path)")
         let data = self.location.urlCallback(path)
         let mimeType = guessMimeType(path, data)
         let encodingName: String? = txtMimeTypes.contains(mimeType) ? guessEncoding(data) : nil
@@ -49,6 +49,6 @@ class WebViewURLSchemeHandler: NSObject, WKURLSchemeHandler {
     }
 
     func webView(_ webView: WKWebView, stop urlSchemeTask: WKURLSchemeTask) {
-        print("stoping \(urlSchemeTask.request.url?.absoluteString ?? "")\n")
+        logger.debug("stoping \(urlSchemeTask.request.url?.absoluteString ?? "")\n")
     }
 }

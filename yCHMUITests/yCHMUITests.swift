@@ -6,6 +6,9 @@
 //
 
 import XCTest
+import Logging
+
+let logger = Logger(label: "yCHMUITests")
 
 class yCHMUITests: XCTestCase {
 

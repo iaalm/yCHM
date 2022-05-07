@@ -6,6 +6,9 @@
 //
 
 import SwiftUI
+import Logging
+
+let logger = Logger(label: "cn.iaalm.yCHM")
 
 @main
 struct yCHMApp: App {

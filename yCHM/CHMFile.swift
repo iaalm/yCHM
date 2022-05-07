@@ -76,7 +76,7 @@ func listCHMUnit(_ fd: OpaquePointer, filter: Int32) -> ([CHMUnit], Dictionary<S
     chm_enumerate(fd, filter, {(file, item, p) in
         let pres = p!.assumingMemoryBound(to: ([CHMUnit], Int).self)
         let unit = CHMUnit(c: item)
-        // print("unit: \(unit.path), \(unit.flagList()), \(unit.length)")
+        // logger.trace("unit: \(unit.path), \(unit.flagList()), \(unit.length)")
         pres.pointee.0[pres.pointee.1] = unit
         pres.pointee.1 += 1
         

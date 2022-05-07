@@ -36,10 +36,10 @@ func decodeString(data: Data) -> String {
     let encodingOpt: [StringEncodingDetectionOptionsKey : [NSNumber]]  = [.disallowedEncodingsKey: [11]]
     var lossy: ObjCBool = true
     let encoding = NSString.stringEncoding(for: data, encodingOptions: encodingOpt, convertedString: &convertedString, usedLossyConversion: &lossy)
-    print("get \(encodingToTextName(encoding)!) (\(encoding)) lossy \(lossy)")
+    logger.info("get \(encodingToTextName(encoding)!) (\(encoding)) lossy \(lossy)")
     if lossy.boolValue == true {
         let encoding_all = NSString.stringEncoding(for: data, encodingOptions: encodingOpt, convertedString: &convertedString, usedLossyConversion: &lossy)
-        print("use \(encodingToTextName(encoding_all)!) (\(encoding)) lossy \(lossy)")
+        logger.info("use \(encodingToTextName(encoding_all)!) (\(encoding)) lossy \(lossy)")
         
     }
     return convertedString! as String

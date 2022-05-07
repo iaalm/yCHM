@@ -6,7 +6,10 @@
 //
 
 import XCTest
+import Logging
 @testable import yCHM
+
+let logger = Logger(label: "yCHMTests")
 
 class yCHMTests: XCTestCase {
 

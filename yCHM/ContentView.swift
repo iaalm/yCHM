@@ -73,7 +73,7 @@ struct ContentView: View {
     }
     
     func unitSelected(unit: CHMUnit) {
-        print("Select \(unit.name), \(unit.path)")
+        logger.debug("Select \(unit.name), \(unit.path)")
         self.location = CHMLocation(path: unit.path, urlCallback: chm!.urlCallback)
     }
 }
@@ -95,7 +95,7 @@ struct ContentView_Previews: PreviewProvider {
 
 struct CHMLocation {
     var path: String
-    var urlCallback: (String) -> Data = { _ in print("Empty URL callback"); return Data()}
+    var urlCallback: (String) -> Data = { _ in logger.trace("Empty URL callback"); return Data()}
 }
 
 enum selectorType {

@@ -14,7 +14,7 @@ func parseIndex(_ data: Data) -> [CHMUnit] {
         let doc = try SwiftSoup.parse(htmlStr)
         return parseBody(doc.body()!).children ?? []
     } catch {
-        print("parse error")
+        logger.error("parse error")
         return []
     }
 }
@@ -48,10 +48,10 @@ func parseObj(_ element: Element) -> CHMUnit {
                 case "See Also":
                     break
                 default:
-                    print("unknown param \(pName)")
+                    logger.warning("unknown param \(pName)")
                 }
             } catch {
-                print("get html error")
+                logger.error("get property error")
             }
         default:
             break
@@ -79,7 +79,7 @@ func parseUL(_ element: Element) -> [CHMUnit] {
         case "ul":
             let lastIdx = res.count - 1
             if lastIdx == -1 {
-                print("ul after nothing")
+                logger.error("ul after nothing")
             }
             if res[lastIdx].children == nil {
                 res[lastIdx].children = parseUL(i)
@@ -87,7 +87,7 @@ func parseUL(_ element: Element) -> [CHMUnit] {
                 res[lastIdx].children! += parseUL(i)
             }
         default:
-            print("Unknown tag \(#function) \(getDomPath(i))")
+            logger.warning("Unknown tag \(#function) \(getDomPath(i))")
         }
     }
     return res
@@ -106,7 +106,7 @@ func parseLI(_ element: Element) -> CHMUnit {
         case "object":
             res = parseObj(i)
         default:
-            print("Unknown tag \(#function) \(getDomPath(i))")
+            logger.warning("Unknown tag \(#function) \(getDomPath(i))")
         }
     }
     return res
@@ -118,13 +118,13 @@ func parseBody(_ element: Element) -> CHMUnit {
         switch i.tagName() {
         case "ul":
             if res.children != nil {
-                print("multi ul found for body")
+                logger.warning("multi ul found for body")
             }
             res.children = parseUL(i)
         case "object":
             break
         default:
-            print("Unknown tag \(#function) \(getDomPath(i))")
+            logger.error("Unknown tag \(#function) \(getDomPath(i))")
         }
     }
     return res
