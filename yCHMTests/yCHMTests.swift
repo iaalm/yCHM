@@ -21,7 +21,7 @@ class yCHMTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testParserPerformance() throws {
+    func testLoadPerformance() throws {
         let bundle = Bundle(for: type(of: self))
         let chmpath = bundle.path(forResource: "PowerCollections", ofType: "chm")!
         self.measure {
