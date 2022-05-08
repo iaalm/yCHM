@@ -157,11 +157,12 @@ class IndexParserTests: XCTestCase {
     }
 
     func testPerformance() throws {
+        let data = testHtml1.data(using: .utf8)!
+        var res: [CHMUnit] = []
         self.measure {
-            let data = testHtml1.data(using: .utf8)!
-            let res = parseIndex(data)
-            assertIndexIsRight(res)
+            res = parseIndex(data)
         }
+        assertIndexIsRight(res)
     }
     
     func assertIndexIsRight(_ units: [CHMUnit], specialItem: String = "specialitem") {
