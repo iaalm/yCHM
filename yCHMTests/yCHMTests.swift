@@ -22,8 +22,14 @@ class yCHMTests: XCTestCase {
     }
 
     func testLoadPerformance() throws {
-        let bundle = Bundle(for: type(of: self))
-        let chmpath = bundle.path(forResource: "PowerCollections", ofType: "chm")!
+        let chmpath = Bundle(for: type(of: self)).path(forResource: "PowerCollections", ofType: "chm")!
+        self.measure {
+            let _ = CHMFile(filename: chmpath)
+        }
+    }
+    
+    func testLoadPerformance7Z() throws {
+        let chmpath = Bundle(for: type(of: self)).path(forResource: "7-zip", ofType: "chm")!
         self.measure {
             let _ = CHMFile(filename: chmpath)
         }
