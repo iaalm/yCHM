@@ -35,4 +35,13 @@ class yCHMTests: XCTestCase {
         }
     }
 
+    func testFuzzyMatch() throws {
+        XCTAssertTrue(fuzzyMatch(query: "", text: "abc"))
+        XCTAssertTrue(fuzzyMatch(query: "Abc", text: "abc"))
+        XCTAssertTrue(fuzzyMatch(query: "abc", text: "azzzbzzzc"))
+        XCTAssertTrue(fuzzyMatch(query: "abc", text: "aaabbbccc"))
+        XCTAssertFalse(fuzzyMatch(query: "abc", text: "acb"))
+        XCTAssertFalse(fuzzyMatch(query: "aac", text: "ac"))
+        XCTAssertFalse(fuzzyMatch(query: "aac", text: ""))
+    }
 }

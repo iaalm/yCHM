@@ -13,6 +13,7 @@ struct ContentView: View {
     @State var location: CHMLocation
     @State var chm: CHMFile? = nil
     @State var selector: selectorType = .tree
+    @State var searchText: String = ""
     
     @State var index: [CHMUnit] = []
     @State var tree: [CHMUnit] = []
@@ -24,6 +25,7 @@ struct ContentView: View {
         HStack {
             VStack {
                 HStack {
+                    TextField("Search", text: $searchText)
                     Button(action: {() in
                         selector = .tree
                     }, label: {
@@ -41,9 +43,9 @@ struct ContentView: View {
                     }).disabled(selector == .object)
                 }
                 switch selector {
-                case .flat: TreeView(items: $index, onClick: self.unitSelected)
-                case .tree: TreeView(items: $tree, onClick: self.unitSelected)
-                case .object: TreeView(items: $object, onClick: self.unitSelected)
+                case .flat: TreeView(items: $index, textFilter: $searchText, onClick: self.unitSelected)
+                case .tree: TreeView(items: $tree, textFilter: $searchText, onClick: self.unitSelected)
+                case .object: TreeView(items: $object, textFilter: $searchText, onClick: self.unitSelected)
                 }
             }
             .frame(minWidth: 100, idealWidth: 200, maxWidth: 200, minHeight: /*@START_MENU_TOKEN@*/0/*@END_MENU_TOKEN@*/, idealHeight: .infinity, maxHeight: .infinity, alignment: .center)
