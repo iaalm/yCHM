@@ -17,7 +17,7 @@ struct yCHMApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView(
-                location: CHMLocation(path: "/"))
+                location: CHMLocation())
         }
     }
 }

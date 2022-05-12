@@ -8,37 +8,23 @@
 import Foundation
 import SwiftUI
 
-struct FlatView: View {
-    @Binding var items: [CHMUnit]
-    let onClick: (CHMUnit) -> Void
-    
-    var body: some View {
-        List(items, id: \.id) { unit in
-            UnitView(unit: unit, onClick: onClick)
-        }
-    }
-}
-
 struct TreeView: View {
     @Binding var items: [CHMUnit]
     @Binding var textFilter: String
-    let onClick: (CHMUnit) -> Void
+    @Binding var selected: CHMUnit?
     
     var body: some View {
-        List(filterByText(query: textFilter, items: items), id: \.id, children: \.children) { unit in
-            UnitView(unit: unit, onClick: onClick)
+        List(filterByText(query: textFilter, items: items), id: \.self, children: \.children, selection: $selected) { unit in
+            UnitView(unit: unit)
         }
     }
 }
 
 struct UnitView: View {
     var unit: CHMUnit
-    let onClick: (CHMUnit) -> Void
     
     var body: some View {
-        Button(action: { onClick(unit) }) {
-            Text(unit.name)
-        }.buttonStyle(PlainButtonStyle())
+        Text(unit.name)
     }
 
 }

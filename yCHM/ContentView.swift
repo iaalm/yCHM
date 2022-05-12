@@ -43,9 +43,9 @@ struct ContentView: View {
                     }).disabled(selector == .object)
                 }
                 switch selector {
-                case .flat: TreeView(items: $index, textFilter: $searchText, onClick: self.unitSelected)
-                case .tree: TreeView(items: $tree, textFilter: $searchText, onClick: self.unitSelected)
-                case .object: TreeView(items: $object, textFilter: $searchText, onClick: self.unitSelected)
+                case .flat: TreeView(items: $index, textFilter: $searchText, selected: $location.unit)
+                case .tree: TreeView(items: $tree, textFilter: $searchText, selected: $location.unit)
+                case .object: TreeView(items: $object, textFilter: $searchText, selected: $location.unit)
                 }
             }
             .frame(minWidth: 100, idealWidth: 200, maxWidth: 200, minHeight: /*@START_MENU_TOKEN@*/0/*@END_MENU_TOKEN@*/, idealHeight: .infinity, maxHeight: .infinity, alignment: .center)
@@ -70,20 +70,16 @@ struct ContentView: View {
             index = chm!.index
             tree = chm!.tree
             object = chm!.items
-            unitSelected(unit: chm!.entryPoint())
+            location.urlCallback = chm!.urlCallback
+            location.unit = chm!.entryPoint()
         }
-    }
-    
-    func unitSelected(unit: CHMUnit) {
-        logger.debug("Select \(unit.name), \(unit.path)")
-        self.location = CHMLocation(path: unit.path, urlCallback: chm!.urlCallback)
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView(
-            location: CHMLocation(path: "/index.html"),
+            location: CHMLocation(),
             tree: [CHMUnit(path: "/", children: [
                 .init(path: "/a/", children: [
                     .init(path: "/a/b"),
@@ -96,7 +92,7 @@ struct ContentView_Previews: PreviewProvider {
 }
 
 struct CHMLocation {
-    var path: String
+    var unit: CHMUnit?
     var urlCallback: (String) -> Data = { _ in logger.trace("Empty URL callback"); return Data()}
 }
 

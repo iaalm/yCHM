@@ -69,6 +69,20 @@ class CHMUnit: Identifiable {
     }
 }
 
+extension CHMUnit: Hashable {
+    static func == (lhs: CHMUnit, rhs: CHMUnit) -> Bool {
+        return lhs.name == rhs.name
+            && lhs.path == rhs.path
+            && lhs.parent == lhs.parent
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(path)
+        hasher.combine(name)
+        hasher.combine(parent)
+    }
+}
+
 func getNameFromPath(_ path: String) -> String {
     let seg = path.split(separator: "/")
     for i in seg.reversed() {

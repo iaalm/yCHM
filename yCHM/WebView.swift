@@ -19,13 +19,16 @@ struct WebView: NSViewRepresentable {
     }
 
     func updateNSView(_ uiView: WKWebView, context: Context) {
-        // uiView.loadHTMLString(text, baseURL: nil)
-        let escapedPath = location.path.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed)!
+        let path = location.unit?.path
+        if path == nil {
+            return
+        }
+        let escapedPath = path!.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed)!
         let url = URL(string:escapedPath, relativeTo: baseUrl)
         if url != nil {
             uiView.load(URLRequest(url: url!))
         } else {
-            logger.error("invalid path \(location.path)")
+            logger.error("invalid path \(path!)")
         }
     }}
 
