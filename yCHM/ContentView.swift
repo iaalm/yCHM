@@ -15,9 +15,9 @@ struct ContentView: View {
     @State var selector: selectorType = .tree
     @State var searchText: String = ""
     
-    @State var index: [CHMUnit] = []
-    @State var tree: [CHMUnit] = []
-    @State var object: [CHMUnit] = []
+    @State var index: [CHMUnitFiltable] = []
+    @State var tree: [CHMUnitFiltable] = []
+    @State var object: [CHMUnitFiltable] = []
     
     let docPicker = DocPicker()
     
@@ -67,11 +67,11 @@ struct ContentView: View {
     func fileOpened(_ filename: String?) {
         if filename != nil {
             chm = CHMFile(filename: filename!)
-            index = chm!.index
-            tree = chm!.tree
-            object = chm!.items
+            index = chm!.index.map({CHMUnitFiltable(unit: $0)})
+            tree = chm!.tree.map({CHMUnitFiltable(unit: $0)})
+            object = chm!.items.map({CHMUnitFiltable(unit: $0)})
             location.urlCallback = chm!.urlCallback
-            location.unit = chm!.entryPoint()
+            location.unit = CHMUnitFiltable(unit: chm!.entryPoint())
         }
     }
 }
@@ -80,19 +80,19 @@ struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView(
             location: CHMLocation(),
-            tree: [CHMUnit(path: "/", children: [
+            tree: [CHMUnitFiltable(unit: CHMUnit(path: "/", children: [
                 .init(path: "/a/", children: [
                     .init(path: "/a/b"),
                     .init(path: "/a/c")
                 ]),
                 .init(path: "/d")
-            ])]
+            ]))]
         )
     }
 }
 
 struct CHMLocation {
-    var unit: CHMUnit?
+    var unit: CHMUnitFiltable?
     var urlCallback: (String) -> Data = { _ in logger.trace("Empty URL callback"); return Data()}
 }
 

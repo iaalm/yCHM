@@ -22,6 +22,15 @@ class CHMUnit: Identifiable {
         self.length = 0
     }
     
+    init(_ unit: CHMUnit) {
+        self.path = unit.path
+        self.name = unit.name
+        self.flags = unit.flags
+        self.length = unit.length
+        self.parent = unit.parent
+        self.children = unit.children
+    }
+    
     init(path:String, children: [CHMUnit]? = nil) {
         self.flags = 0
         self.path = path
@@ -31,12 +40,13 @@ class CHMUnit: Identifiable {
         children?.forEach({$0.parent = self})
     }
     
-    init(name: String, path:String, children: [CHMUnit]? = nil) {
+    init(name: String, path:String, children: [CHMUnit]? = nil, parent: CHMUnit? = nil) {
         self.name = name
         self.flags = 0
         self.path = path
         self.children = children
         self.length = 0
+        self.parent = parent
         children?.forEach({$0.parent = self})
     }
     
@@ -66,20 +76,6 @@ class CHMUnit: Identifiable {
             }
         })
         return res
-    }
-}
-
-extension CHMUnit: Hashable {
-    static func == (lhs: CHMUnit, rhs: CHMUnit) -> Bool {
-        return lhs.name == rhs.name
-            && lhs.path == rhs.path
-            && lhs.parent == lhs.parent
-    }
-    
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(path)
-        hasher.combine(name)
-        hasher.combine(parent)
     }
 }
 

@@ -31,12 +31,14 @@ class yCHMUITests: XCTestCase {
         openChmFile(app)
         
         let ychmContentview1Appwindow1Window = XCUIApplication()/*@START_MENU_TOKEN@*/.windows["yCHM.ContentView-1-AppWindow-1"]/*[[".windows[\"yCHM\"]",".windows[\"yCHM.ContentView-1-AppWindow-1\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/
-        let nsoutlineviewdisclosurebuttonkeyDisclosureTriangle = ychmContentview1Appwindow1Window/*@START_MENU_TOKEN@*/.outlines.disclosureTriangles["NSOutlineViewDisclosureButtonKey"]/*[[".scrollViews.outlines",".outlineRows",".cells.disclosureTriangles[\"NSOutlineViewDisclosureButtonKey\"]",".disclosureTriangles[\"NSOutlineViewDisclosureButtonKey\"]",".outlines"],[[[-1,4,1],[-1,0,1]],[[-1,3],[-1,2],[-1,1,2]],[[-1,3],[-1,2]]],[0,0]]@END_MENU_TOKEN@*/
-        nsoutlineviewdisclosurebuttonkeyDisclosureTriangle.click()
+        ychmContentview1Appwindow1Window/*@START_MENU_TOKEN@*/.outlines.disclosureTriangles["NSOutlineViewDisclosureButtonKey"]/*[[".scrollViews.outlines",".outlineRows",".cells.disclosureTriangles[\"NSOutlineViewDisclosureButtonKey\"]",".disclosureTriangles[\"NSOutlineViewDisclosureButtonKey\"]",".outlines"],[[[-1,4,1],[-1,0,1]],[[-1,3],[-1,2],[-1,1,2]],[[-1,3],[-1,2]]],[0,0]]@END_MENU_TOKEN@*/.click()
+        ychmContentview1Appwindow1Window/*@START_MENU_TOKEN@*/.outlines.staticTexts["Bag(T) Class"]/*[[".scrollViews.outlines",".outlineRows",".cells.staticTexts[\"Bag(T) Class\"]",".staticTexts[\"Bag(T) Class\"]",".outlines"],[[[-1,4,1],[-1,0,1]],[[-1,3],[-1,2],[-1,1,2]],[[-1,3],[-1,2]]],[0,0]]@END_MENU_TOKEN@*/.click()
         
-        let nsoutlineviewdisclosurebuttonkeyDisclosureTriangle2 = ychmContentview1Appwindow1Window/*@START_MENU_TOKEN@*/.outlines.cells.containing(.button, identifier:"Algorithms Class")/*[[".scrollViews.outlines",".outlineRows.cells.containing(.button, identifier:\"Algorithms Class\")",".cells.containing(.button, identifier:\"Algorithms Class\")",".outlines"],[[[-1,3,1],[-1,0,1]],[[-1,2],[-1,1]]],[0,0]]@END_MENU_TOKEN@*/.disclosureTriangles["NSOutlineViewDisclosureButtonKey"]
-        nsoutlineviewdisclosurebuttonkeyDisclosureTriangle2.click()
-        ychmContentview1Appwindow1Window/*@START_MENU_TOKEN@*/.outlines.buttons["Algorithms Class"]/*[[".scrollViews.outlines",".outlineRows",".cells.buttons[\"Algorithms Class\"]",".buttons[\"Algorithms Class\"]",".outlines"],[[[-1,4,1],[-1,0,1]],[[-1,3],[-1,2],[-1,1,2]],[[-1,3],[-1,2]]],[0,0]]@END_MENU_TOKEN@*/.click()
+        let nsoutlineviewdisclosurebuttonkeyDisclosureTriangle = ychmContentview1Appwindow1Window/*@START_MENU_TOKEN@*/.outlines.cells.containing(.staticText, identifier:"Bag(T) Class")/*[[".scrollViews.outlines",".outlineRows.cells.containing(.staticText, identifier:\"Bag(T) Class\")",".cells.containing(.staticText, identifier:\"Bag(T) Class\")",".outlines"],[[[-1,3,1],[-1,0,1]],[[-1,2],[-1,1]]],[0,0]]@END_MENU_TOKEN@*/.disclosureTriangles["NSOutlineViewDisclosureButtonKey"]
+        nsoutlineviewdisclosurebuttonkeyDisclosureTriangle.click()
+        ychmContentview1Appwindow1Window/*@START_MENU_TOKEN@*/.outlines.staticTexts["BinaryPredicate(T) Delegate"]/*[[".scrollViews.outlines",".outlineRows",".cells.staticTexts[\"BinaryPredicate(T) Delegate\"]",".staticTexts[\"BinaryPredicate(T) Delegate\"]",".outlines"],[[[-1,4,1],[-1,0,1]],[[-1,3],[-1,2],[-1,1,2]],[[-1,3],[-1,2]]],[0,0]]@END_MENU_TOKEN@*/.click()
+        ychmContentview1Appwindow1Window.buttons[XCUIIdentifierCloseWindow].click()
+        
     }
 
     func testLaunchPerformance() throws {

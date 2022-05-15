@@ -8,13 +8,35 @@
 import Foundation
 import SwiftUI
 
+class CHMUnitFiltable: CHMUnit, Hashable {
+    let allChildren: [CHMUnitFiltable]?
+    var filteredChildren: [CHMUnitFiltable]?
+    
+    init(unit: CHMUnit) {
+        allChildren = unit.children?.map({ CHMUnitFiltable(unit: $0) })
+        filteredChildren = allChildren
+        super.init(unit)
+    }
+    
+    static func == (lhs: CHMUnitFiltable, rhs: CHMUnitFiltable) -> Bool {
+        return lhs.id == rhs.id
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+}
+
 struct TreeView: View {
-    @Binding var items: [CHMUnit]
+    @Binding var items: [CHMUnitFiltable]
     @Binding var textFilter: String
-    @Binding var selected: CHMUnit?
+    @Binding var selected: CHMUnitFiltable?
     
     var body: some View {
-        List(filterByText(query: textFilter, items: items), id: \.self, children: \.children, selection: $selected) { unit in
+        List(
+            filterByText(query: textFilter, items: items),
+            id: \.self, children: \.filteredChildren,
+            selection: $selected) { unit in
             UnitView(unit: unit)
         }
     }
@@ -29,15 +51,16 @@ struct UnitView: View {
 
 }
 
-func filterByText(query: String, items: [CHMUnit]) -> [CHMUnit]
+func filterByText(query: String, items: [CHMUnitFiltable]) -> [CHMUnitFiltable]
 {
     return items.compactMap({
         if fuzzyMatch(query: query, text: $0.name) {
             return $0
         }
-        let filteredChildren = filterByText(query: query, items: $0.children ?? [])
+        let filteredChildren = filterByText(query: query, items: $0.allChildren ?? [])
         if filteredChildren.count > 0 {
-            return CHMUnit(name: $0.name, path: $0.path, children: filteredChildren)
+            $0.filteredChildren = filteredChildren
+            return $0
         }
         return nil
     })
@@ -46,7 +69,8 @@ func filterByText(query: String, items: [CHMUnit]) -> [CHMUnit]
 func fuzzyMatch(query: String, text: String) -> Bool {
     var idx: String.Index? = text.startIndex
     for i in query {
-        idx = text[idx!..<text.endIndex].firstIndex(where: { $0.lowercased() == i.lowercased()})
+        idx = text[idx!..<text.endIndex]
+            .firstIndex(where: { $0.lowercased() == i.lowercased()})
         if idx == nil {
             return false
         }
