@@ -9,18 +9,19 @@ import Foundation
 
 class CHMFile {
     let fd: OpaquePointer
-    let items: [CHMUnit]
-    let index: [CHMUnit]
-    let tree: [CHMUnit]
+    let items: CHMUnit
+    let index: CHMUnit
+    let tree: CHMUnit
     
     init(filename: String) {
         fd = chm_open(filename)
-        items = listCHMUnit(fd, filter: CHM_ENUMERATE_ALL).0
-        let hhcPath = items.first(where: {$0.path.lowercased().hasSuffix(".hhc")})?.path
+        let allItems = listCHMUnit(fd, filter: CHM_ENUMERATE_ALL).0
+        items = CHMUnit(name: "", path: "", children: allItems, parent: nil)
+        let hhcPath = allItems.first(where: {$0.path.lowercased().hasSuffix(".hhc")})?.path
         // if hhc == nil
         let hhcData = getUrlContent(fd, path: hhcPath!)
         tree = parseIndex(hhcData)
-        let hhkPath = items.first(where: {$0.path.lowercased().hasSuffix(".hhk")})?.path
+        let hhkPath = allItems.first(where: {$0.path.lowercased().hasSuffix(".hhk")})?.path
         // if hhk == nil
         let hhkData = getUrlContent(fd, path: hhkPath!)
         index = parseIndex(hhkData)
@@ -31,7 +32,7 @@ class CHMFile {
     }
 
     func entryPoint () -> CHMUnit {
-        var item = tree[0]
+        var item = tree.children![0]
         while item.children?[0] != nil {
             item = item.children![0]
         }

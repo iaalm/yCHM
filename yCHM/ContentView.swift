@@ -15,9 +15,9 @@ struct ContentView: View {
     @State var selector: selectorType = .tree
     @State var searchText: String = ""
     
-    @State var index: [CHMUnitFiltable] = []
-    @State var tree: [CHMUnitFiltable] = []
-    @State var object: [CHMUnitFiltable] = []
+    @StateObject var index: CHMUnitFiltable = CHMUnitFiltable()
+    @StateObject var tree: CHMUnitFiltable = CHMUnitFiltable()
+    @StateObject var object: CHMUnitFiltable = CHMUnitFiltable()
     
     let docPicker = DocPicker()
     
@@ -43,9 +43,9 @@ struct ContentView: View {
                     }).disabled(selector == .object)
                 }
                 switch selector {
-                case .flat: TreeView(items: $index, textFilter: $searchText, selected: $location.unit)
-                case .tree: TreeView(items: $tree, textFilter: $searchText, selected: $location.unit)
-                case .object: TreeView(items: $object, textFilter: $searchText, selected: $location.unit)
+                case .flat: TreeView(items: index, textFilter: $searchText, selected: $location.unit)
+                case .tree: TreeView(items: tree, textFilter: $searchText, selected: $location.unit)
+                case .object: TreeView(items: object, textFilter: $searchText, selected: $location.unit)
                 }
             }
             .frame(minWidth: 100, idealWidth: 200, maxWidth: 200, minHeight: /*@START_MENU_TOKEN@*/0/*@END_MENU_TOKEN@*/, idealHeight: .infinity, maxHeight: .infinity, alignment: .center)
@@ -67,9 +67,9 @@ struct ContentView: View {
     func fileOpened(_ filename: String?) {
         if filename != nil {
             chm = CHMFile(filename: filename!)
-            index = chm!.index.map({CHMUnitFiltable(unit: $0)})
-            tree = chm!.tree.map({CHMUnitFiltable(unit: $0)})
-            object = chm!.items.map({CHMUnitFiltable(unit: $0)})
+            index.load(unit: chm!.index)
+            tree.load(unit: chm!.tree)
+            object.load(unit: chm!.items)
             location.urlCallback = chm!.urlCallback
             location.unit = CHMUnitFiltable(unit: chm!.entryPoint())
         }
@@ -80,13 +80,13 @@ struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView(
             location: CHMLocation(),
-            tree: [CHMUnitFiltable(unit: CHMUnit(path: "/", children: [
+            tree: CHMUnitFiltable(unit: CHMUnit(path: "/", children: [
                 .init(path: "/a/", children: [
                     .init(path: "/a/b"),
                     .init(path: "/a/c")
                 ]),
                 .init(path: "/d")
-            ]))]
+            ]))
         )
     }
 }

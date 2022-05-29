@@ -8,14 +8,47 @@
 import Foundation
 import SwiftUI
 
-class CHMUnitFiltable: CHMUnit, Hashable {
-    let allChildren: [CHMUnitFiltable]?
-    var filteredChildren: [CHMUnitFiltable]?
+class CHMUnitFiltable: CHMUnit, Hashable, ObservableObject {
+    var allChildren: [CHMUnitFiltable]? = []
+    @Published var filteredChildren: [CHMUnitFiltable]? = []
+    var lastfilter: String = ""
+
+    override init() {
+        super.init()
+    }
     
     init(unit: CHMUnit) {
         allChildren = unit.children?.map({ CHMUnitFiltable(unit: $0) })
         filteredChildren = allChildren
         super.init(unit)
+    }
+    
+    func load(unit: CHMUnit) {
+        name = unit.name
+        path = unit.path
+        parent = unit.parent
+        children = unit.children
+        allChildren = unit.children?.map({ CHMUnitFiltable(unit: $0) })
+        filteredChildren = allChildren
+    }
+    
+    func filter(text: String) -> CHMUnitFiltable {
+        if lastfilter == text {
+            // urgely but break the update loop
+            return self
+        }
+        self.filteredChildren = allChildren?.filter({
+            if fuzzyMatch(query: text, text: $0.name) {
+                return true
+            }
+            var _ = $0.filter(text: text)
+            if ($0.filteredChildren?.count ?? -1) > 0 {
+                return true
+            }
+            return false
+        })
+        lastfilter = text
+        return self
     }
     
     static func == (lhs: CHMUnitFiltable, rhs: CHMUnitFiltable) -> Bool {
@@ -28,13 +61,13 @@ class CHMUnitFiltable: CHMUnit, Hashable {
 }
 
 struct TreeView: View {
-    @Binding var items: [CHMUnitFiltable]
+    @ObservedObject var items: CHMUnitFiltable
     @Binding var textFilter: String
     @Binding var selected: CHMUnitFiltable?
     
     var body: some View {
         List(
-            filterByText(query: textFilter, items: items),
+            items.filter(text: textFilter).filteredChildren!,
             id: \.self, children: \.filteredChildren,
             selection: $selected) { unit in
             UnitView(unit: unit)
@@ -49,21 +82,6 @@ struct UnitView: View {
         Text(unit.name)
     }
 
-}
-
-func filterByText(query: String, items: [CHMUnitFiltable]) -> [CHMUnitFiltable]
-{
-    return items.compactMap({
-        if fuzzyMatch(query: query, text: $0.name) {
-            return $0
-        }
-        let filteredChildren = filterByText(query: query, items: $0.allChildren ?? [])
-        if filteredChildren.count > 0 {
-            $0.filteredChildren = filteredChildren
-            return $0
-        }
-        return nil
-    })
 }
 
 func fuzzyMatch(query: String, text: String) -> Bool {

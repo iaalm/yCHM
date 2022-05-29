@@ -158,14 +158,15 @@ class IndexParserTests: XCTestCase {
 
     func testPerformance() throws {
         let data = testHtml1.data(using: .utf8)!
-        var res: [CHMUnit] = []
+        var res: CHMUnit = CHMUnit()
         self.measure {
             res = parseIndex(data)
         }
         assertIndexIsRight(res)
     }
     
-    func assertIndexIsRight(_ units: [CHMUnit], specialItem: String = "specialitem") {
+    func assertIndexIsRight(_ unit: CHMUnit, specialItem: String = "specialitem") {
+        let units = unit.children!
         XCTAssertEqual(units.count, 3)
         XCTAssertEqual(units[0].name, "a")
         XCTAssertEqual(units[1].name, "b")

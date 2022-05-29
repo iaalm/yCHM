@@ -8,14 +8,14 @@
 import Foundation
 import SwiftSoup
 
-func parseIndex(_ data: Data) -> [CHMUnit] {
+func parseIndex(_ data: Data) -> CHMUnit {
     let htmlStr = decodeString(data: data)
     do {
         let doc = try SwiftSoup.parse(htmlStr)
-        return parseBody(doc.body()!).children ?? []
+        return parseBody(doc.body()!)
     } catch {
         logger.error("parse error")
-        return []
+        return CHMUnit()
     }
 }
 
