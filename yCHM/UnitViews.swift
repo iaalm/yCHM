@@ -61,16 +61,19 @@ class CHMUnitFiltable: CHMUnit, Hashable, ObservableObject {
 }
 
 struct TreeView: View {
+    @State var textFilter: String = ""
     @ObservedObject var items: CHMUnitFiltable
-    @Binding var textFilter: String
     @Binding var selected: CHMUnitFiltable?
     
     var body: some View {
+        TextField("Search", text: $textFilter)
         List(
-            items.filter(text: textFilter).filteredChildren!,
+            items.filteredChildren!,
             id: \.self, children: \.filteredChildren,
             selection: $selected) { unit in
             UnitView(unit: unit)
+        }.onChange(of: textFilter) {
+            let _ = items.filter(text: $0)
         }
     }
 }
