@@ -68,12 +68,8 @@ class yCHMUITests: XCTestCase {
         app.typeKey("g", modifierFlags: [.command, .shift])
         let sheet = openDialog.sheets.firstMatch
         XCTAssert(sheet.waitForExistence(timeout: 5))
-        let goButton = openDialog.buttons["Go"]
-        let input = sheet.comboBoxes.firstMatch
-        XCTAssert(goButton.exists)
-        XCTAssert(input.exists)
-        input.typeText(chmpath)
-        goButton.click()
+        sheet.typeText(chmpath)
+        sheet.typeText("\n")
         openButton.click()
     }
 }
