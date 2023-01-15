@@ -1,2 +1,6 @@
 xcuserdata
 .DS_Store
+*.swp
+/build
+/archive
+/build.xcarchive

@@ -1,0 +1,42 @@
+name: Release Building
+on:
+  workflow_dispatch:
+    inputs: {}
+  push:
+    tags:
+      - '*'
+
+jobs:
+  build:
+
+    runs-on: macos-latest
+
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Build
+        run: |
+          xcodebuild -target yCHM -scheme yCHM build
+          xcodebuild -target yCHM -scheme yCHM archive -archivePath build
+          xcodebuild -exportArchive -archivePath build.xcarchive -exportPath ./archive/ -exportOptionsPlist export-options.plist
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: yCHM
+          path: |
+            archive/
+
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          generate_release_notes: true
+          files: |
+            archive/
+
