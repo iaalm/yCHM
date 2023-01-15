@@ -95,6 +95,7 @@
 		F430ADB92812D6FD00B71C40 /* CHMFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CHMFile.swift; sourceTree = "<group>"; };
 		F430ADBD28138D1B00B71C40 /* EncodingHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncodingHelpers.swift; sourceTree = "<group>"; };
 		F430ADC3281424F800B71C40 /* UnitViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitViews.swift; sourceTree = "<group>"; };
+		F46EBF8B297449AF00E1CC57 /* export-options.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "export-options.plist"; sourceTree = SOURCE_ROOT; };
 		F472E3CC28240B9300ED3BC3 /* PowerCollections.chm */ = {isa = PBXFileReference; lastKnownFileType = file; path = PowerCollections.chm; sourceTree = "<group>"; };
 		F472E3CF282660E900ED3BC3 /* IndexParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexParserTests.swift; sourceTree = "<group>"; };
 		F472E3D62827917000ED3BC3 /* 7-zip.chm */ = {isa = PBXFileReference; lastKnownFileType = file; path = "7-zip.chm"; sourceTree = "<group>"; };
@@ -178,6 +179,7 @@
 				F430ADAC2812CE3C00B71C40 /* lzx.c */,
 				F430ADA82812CE2500B71C40 /* chm_lib.h */,
 				F430ADA72812CE2500B71C40 /* chm_lib.c */,
+				F46EBF8B297449AF00E1CC57 /* export-options.plist */,
 			);
 			path = yCHM;
 			sourceTree = "<group>";
@@ -609,7 +611,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = GF89F8J3K7;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = yCHMTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -634,7 +636,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = GF89F8J3K7;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = yCHMTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -657,7 +659,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = GF89F8J3K7;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = yCHMUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -680,7 +682,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = GF89F8J3K7;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = yCHMUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

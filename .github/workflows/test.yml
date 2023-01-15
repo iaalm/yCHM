@@ -1,0 +1,22 @@
+name: Unit tests
+on:
+  push: {}
+
+jobs:
+  build:
+
+    runs-on: macos-latest
+
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Build
+        run: |
+          xcodebuild -target yCHM -scheme yCHM build
+          xcodebuild -scheme yCHM test
+
