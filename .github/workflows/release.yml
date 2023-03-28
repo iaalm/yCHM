@@ -21,16 +21,20 @@ jobs:
 
       - name: Build
         run: |
-          xcodebuild -target yCHM -scheme yCHM build
-          xcodebuild -target yCHM -scheme yCHM archive -archivePath build
-          xcodebuild -exportArchive -archivePath build.xcarchive -exportPath ./archive/ -exportOptionsPlist export-options.plist
+          xcodebuild -target yCHM -scheme yCHM -configuration Release build SYMROOT=$(pwd)/build
+          rm -rf build/Release/yCHM/
+          mkdir build/Release/yCHM
+          cp -r build/Release/yCHM.app build/Release/yCHM/
+          ln -s /Applications build/Release/yCHM/Applications
+          hdiutil create build/Release/yCHM.dmg -ov -volname "yCHM" -fs HFS+ -srcfolder build/Release/yCHM/
+
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
           name: yCHM
           path: |
-            archive/
+            build/Release/yCHM.dmg
 
       - name: Release
         uses: softprops/action-gh-release@v1
@@ -38,5 +42,5 @@ jobs:
         with:
           generate_release_notes: true
           files: |
-            archive/
+            build/Release/yCHM.dmg
 
