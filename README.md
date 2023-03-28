@@ -1,3 +1,4 @@
+![icon](yCHM/Assets.xcassets/AppIcon.appiconset/appicon-32.png)
 yCHM [![Release Building](https://github.com/iaalm/yCHM/actions/workflows/release.yml/badge.svg)](https://github.com/iaalm/yCHM/actions/workflows/release.yml)
 =========
 
