@@ -3,6 +3,8 @@ yCHM [![Release Building](https://github.com/iaalm/yCHM/actions/workflows/releas
 
 Yet another CHM reader based on CHMLib. Under active but slow development as I only invest a few hours each week on this project.
 
+![Screenshot](assets/Screenshot.png)
+
 # Acknowledgement
 
 [Unofficial (Preliminary) HTML Help Specification](http://www.nongnu.org/chmspec/latest/)
